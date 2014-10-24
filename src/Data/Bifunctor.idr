@@ -1,13 +1,27 @@
 module Data.Bifunctor
 
+import Language.Reflection
+
+||| Bifunctors
+||| @p The action of the bifunctor on objects
 class Bifunctor (p : Type -> Type -> Type) where
-  bimap : (a -> b) -> (c -> d) -> p a c -> p b d
+  ||| The action of the bifunctor on pairs of morphisms
+  ||| @p the bifunctor
+  ||| @m the morphism on the first component
+  ||| @n the morphism on the second component
+  bimap : (m : a -> b) -> (n : c -> d) -> p a c -> p b d
   bimap f g = first f . second g
 
-  first : (a -> b) -> p a c -> p b c
+  ||| The action of the bifunctor on morphisms pertaining to the first object
+  ||| @p the bifunctor
+  ||| @m the morphism on the first component
+  first : (m : a -> b) -> p a c -> p b c
   first f = bimap f id
 
-  second : (a -> b) -> p c a -> p c b
+  ||| The action of the bifunctor on morphisms pertaining to the second object
+  ||| @p the bifunctor
+  ||| @m the morphism on the first component
+  second : (m : a -> b) -> p c a -> p c b
   second = bimap id
 
 instance Bifunctor Either where
