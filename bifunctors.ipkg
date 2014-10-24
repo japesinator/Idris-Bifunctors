@@ -1,0 +1,5 @@
+package bifunctors
+
+sourcedir = src
+
+modules = Data.Bifunctor
