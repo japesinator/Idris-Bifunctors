@@ -1,5 +1,8 @@
 module Data.Bifunctor.Apply
 
+-- These are not Biapplicatives.  Those will be in Data.Biapplicative once I
+-- finish writing them
+
 import Data.Bifunctor
 
 infixl 4 <<$>>, <<.>>, <<., .>>, <<..>>
@@ -8,6 +11,8 @@ infixl 4 <<$>>, <<.>>, <<., .>>, <<..>>
 (<<$>>) : (a -> b) -> a -> b
 (<<$>>) = id
 
+||| Biapplys (not to be confused with Biapplicatives)
+||| @p The action of the Biapply on pairs of objects
 class Bifunctor p => Biapply (p : Type -> Type -> Type) where
 
   ||| Applys a bifunctor of functions to another bifunctor of the same type
@@ -22,11 +27,12 @@ class Bifunctor p => Biapply (p : Type -> Type -> Type) where
   a .>> b = bimap (const id) (const id) <<$>> a <<.>> b
 
 ||| Lifts a binary function into a bifunctor
-bilift2 : Biapply w => (a -> b -> c) -> (d -> e -> f) -> w a d -> w b e -> w c f
+bilift2 : Biapply p => (a -> b -> c) -> (d -> e -> f) -> p a d -> p b e -> p c f
 bilift2 f g a b = bimap f g <<$>> a <<.>> b
 
 ||| Lifts a ternary function into a bifunctor
-bilift3 : Biapply w => (a -> b -> c -> d) -> (e -> f -> g -> h) -> w a e -> w b f -> w c g -> w d h
+bilift3 : Biapply p => (a -> b -> c -> d) -> (e -> f -> g -> h)
+        -> p a e -> p b f -> p c g -> p d h
 bilift3 f g a b c = bimap f g <<$>> a <<.>> b <<.>> c
 
 ||| Applies the second of two bifunctors of the same type to the first
