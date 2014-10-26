@@ -25,4 +25,4 @@ class Bifunctor p => Biapplicative (p : Type -> Type -> Type) where
 
 ||| Applies the second of two biapplicatives to the first
 (<<**>>) : Biapplicative p => p a c -> p (a -> b) (c -> d) -> p b d
-(<<**>>) = ?rhs
+(<<**>>) = flip (<<*>>)
