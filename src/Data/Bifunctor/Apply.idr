@@ -1,7 +1,6 @@
 module Data.Bifunctor.Apply
 
--- These are not Biapplicatives.  Those will be in Data.Biapplicative once I
--- finish writing them
+-- These are not Biapplicatives.  Those are in Data.Biapplicative
 
 import Data.Bifunctor
 
@@ -35,6 +34,6 @@ bilift3 : Biapply p => (a -> b -> c -> d) -> (e -> f -> g -> h)
         -> p a e -> p b f -> p c g -> p d h
 bilift3 f g a b c = bimap f g <<$>> a <<.>> b <<.>> c
 
-||| Applies the second of two bifunctors of the same type to the first
+||| Applies the second of two bifunctors to the first
 (<<..>>): Biapply p => p a c -> p (a -> b) (c -> d) -> p b d
 (<<..>>) = flip (<<.>>)

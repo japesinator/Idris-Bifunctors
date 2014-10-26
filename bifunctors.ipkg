@@ -4,3 +4,4 @@ sourcedir = src
 
 modules = Data.Bifunctor,
           Data.Bifunctor.Apply
+          Data.Biapplicative
