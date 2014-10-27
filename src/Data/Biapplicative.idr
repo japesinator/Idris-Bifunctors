@@ -26,3 +26,7 @@ class Bifunctor p => Biapplicative (p : Type -> Type -> Type) where
 ||| Applies the second of two biapplicatives to the first
 (<<**>>) : Biapplicative p => p a c -> p (a -> b) (c -> d) -> p b d
 (<<**>>) = flip (<<*>>)
+
+instance Biapplicative Pair where
+  bipure a b = (a, b)
+  (f, g) <<*>> (a, b) = (f a, g b)

@@ -27,3 +27,6 @@ class Bifunctor (p : Type -> Type -> Type) where
 instance Bifunctor Either where
   bimap f _ (Left a) = Left (f a)
   bimap _ g (Right b) = Right (g b)
+
+instance Bifunctor Pair where
+  bimap f g (a, b) = (f a, g b)
