@@ -39,3 +39,4 @@ test4 = Refl
 
 test5 : bimap intFunct stringFunct testPair =
         ((42 * 3), "hello world from jp")
+test5 = Refl
