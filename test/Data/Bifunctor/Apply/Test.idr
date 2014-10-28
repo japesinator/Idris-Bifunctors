@@ -1,4 +1,4 @@
-module Main
+module Data.Bifunctor.Apply.Test
 
 import Data.Bifunctor.Apply
 

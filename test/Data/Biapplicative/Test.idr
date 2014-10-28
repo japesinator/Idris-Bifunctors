@@ -1,4 +1,4 @@
-module Main
+module Data.Biapplicative.Test
 
 import Data.Biapplicative
 
