@@ -1,7 +1,5 @@
 module Data.Bifunctor
 
-import Language.Reflection
-
 ||| Bifunctors
 ||| @p The action of the bifunctor on objects
 class Bifunctor (p : Type -> Type -> Type) where
