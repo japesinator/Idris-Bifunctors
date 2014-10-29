@@ -28,7 +28,7 @@ test1 : bijoin <<*>> ((testPair0, testPair1), (testPair2, testPair3)) =
         ((42, "hello world"), (45, "goodbye again world"))
 test1 = Refl
 
-test2 : bibind testPair0 testPair1 intFunct stringFunct =
+test2 : bibind (testPair0, testPair1) (intFunct, stringFunct) =
         ((42, "hi"), (46, "goodbye world"))
 test2 = Refl
 
@@ -37,10 +37,10 @@ test2 = Refl
 --   is actually defined differently (to need less information), so it should
 --   be tested
 
-test3 : bibindl testPair0 intFunct stringFunct =
+test3 : bibindl testPair0 (intFunct, stringFunct) =
         (42, "hi")
 test3 = Refl
 
-test4 : bibindr testPair0 intFunct stringFunct =
+test4 : bibindr testPair0 (intFunct, stringFunct) =
         (46, "hello world")
 test4 = Refl
