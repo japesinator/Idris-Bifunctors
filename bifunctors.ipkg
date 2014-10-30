@@ -5,4 +5,5 @@ sourcedir = src
 modules = Data.Bifunctor,
           Data.Bifunctor.Apply,
           Data.Biapplicative,
-          Data.Bimonad
+          Data.Bimonad,
+          Data.Bifoldable

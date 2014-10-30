@@ -1,4 +1,4 @@
 #! /bin/sh
 
 idris --install test.ipkg
-rm -rf `idris --libdir`/bifun
+rm -rf `idris --libdir`/bifunctors.test
