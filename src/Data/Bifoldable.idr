@@ -93,6 +93,7 @@ instance Semigroup Any where
 instance Monoid Any where
   neutral = toAny False
 
+private
 record All : Type where
   toAll : (getAll : Bool) -> All
 
