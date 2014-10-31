@@ -6,4 +6,5 @@ modules = Data.Bifunctor,
           Data.Bifunctor.Apply,
           Data.Biapplicative,
           Data.Bimonad,
-          Data.Bifoldable
+          Data.Bifoldable,
+          Data.Bitraversable

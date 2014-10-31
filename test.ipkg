@@ -8,4 +8,5 @@ modules = Data.Bifunctor.Test,
           Data.Biapply.Test,
           Data.Biapplicative.Test,
           Data.Bimonad.Test,
-          Data.Bifoldable.Test
+          Data.Bifoldable.Test,
+          Data.Bitraversable.Test
