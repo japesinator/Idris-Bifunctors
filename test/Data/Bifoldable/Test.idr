@@ -5,18 +5,24 @@ import Data.Bifoldable
 testPair0 : (Int, String)
 testPair0 = (42, "hello world")
 
+testEither0 : Either Int String
+testEither0 = Left 43
+
+testEither1 : Either Int String
+testEither1 = Right "goodbye world"
+
 intFunct : Int -> String
 intFunct = show
 
 stringFunct : String -> String
 stringFunct = id
 
-test0 : bifoldMap show id testPair0 =
-        "42hello world"
+test0 : bifoldMap show id testEither0 =
+        "43"
 test0 = Refl
 
-test1 : bifoldr (\x,y => (show x) ++ y) (++) "" testPair0 =
-        "hello world42"
+test1 : bifoldr (\x,y => (show x) ++ y) (++) "" testEither1 =
+        "goodbye world"
 test1 = Refl
 
 test2 : bifoldl (\x,y => x ++ (show y)) (++) "" testPair0 =

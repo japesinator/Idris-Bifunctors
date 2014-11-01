@@ -5,18 +5,24 @@ import Data.Bitraversable
 testPair0 : (Int, String)
 testPair0 = (42, "hello world")
 
+testEither0 : Either Int String
+testEither0 = Left 43
+
+testEither1 : Either Int String
+testEither1 = Right "goodbye world"
+
 intFunct : Int -> Maybe String
 intFunct = Just . show
 
 stringFunct : String -> Maybe String
 stringFunct = Just . id
 
-test0 : bitraverse intFunct stringFunct testPair0 =
-        Just ("42", "hello world")
+test0 : bitraverse intFunct stringFunct testEither0 =
+        Just (Left "43")
 test0 = Refl
 
-test1 : bisequence (bimap intFunct stringFunct testPair0) =
-        Just ("42", "hello world")
+test1 : bisequence (bimap intFunct stringFunct testEither1) =
+        Just (Right "goodbye world")
 test1 = Refl
 
 test2 : bimapAccumL (\x,y => (x, 1)) (\x,y => (x, "two")) True testPair0 =

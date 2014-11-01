@@ -115,3 +115,7 @@ biall p q = getAll . bifoldMap (toAll . p) (toAll . q)
 
 instance Bifoldable Pair where
   bifoldMap f g (a, b) = f a <+> g b
+
+instance Bifoldable Either where
+  bifoldMap f _ (Left a)  = f a
+  bifoldMap _ g (Right b) = g b

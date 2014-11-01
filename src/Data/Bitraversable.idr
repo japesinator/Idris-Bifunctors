@@ -57,3 +57,7 @@ bimapAccumR f g s t = runStateR (bitraverse (SR . flip f) (SR . flip g) t) s
 
 instance Bitraversable Pair where
   bitraverse f g (a, b) = (map MkPair (f a)) <$> (g b)
+
+instance Bitraversable Either where
+  bitraverse f _ (Left a)  = map Left (f a)
+  bitraverse _ g (Right b) = map Right (g b)
