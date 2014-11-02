@@ -2,13 +2,10 @@ module Data.Bifoldable
 
 import Data.Morphisms
 
-%access public
-
 -- Idris' standard library doesn't define dual monads, and those are really
 --   handy for bifoldl, so they need to be rewritten
 --   {{{
 
-private
 record Dual : Type -> Type where
   toDual : (getDual : a) -> Dual a
 
@@ -83,7 +80,6 @@ biconcatMap = bifoldMap
 -- As in `Dual`, we need records not present in the standard library
 --   {{{
 
-private
 record Any : Type where
   toAny : (getAny : Bool) -> Any
 
@@ -93,7 +89,6 @@ instance Semigroup Any where
 instance Monoid Any where
   neutral = toAny False
 
-private
 record All : Type where
   toAll : (getAll : Bool) -> All
 
