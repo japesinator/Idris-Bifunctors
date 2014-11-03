@@ -25,5 +25,11 @@ instance Biapplicative p => Biapplicative (Wrapped p) where
 instance Bifoldable p => Bifoldable (Wrapped p) where
   bifoldMap f g = bifoldMap f g . unwrap
 
+instance Bifoldable p => Foldable (Wrapped p a) where
+  foldr f z (Wrap t) = applyEndo (bifoldMap (const neutral) (Endo . f) t) z
+
 instance Bitraversable p => Bitraversable (Wrapped p) where
   bitraverse f g = map Wrap . bitraverse f g . unwrap
+
+instance Bitraversable p => Traversable (Wrapped p a) where
+  traverse f = map Wrap . bitraverse pure f . unwrap
