@@ -4,7 +4,7 @@ import Data.Biapplicative
 import Data.Verified.Bifunctor
 
 class (VerifiedBifunctor p, Biapplicative p) =>
-      VerifieBiapplicative (p : Type -> Type -> Type) where
+      VerifiedBiapplicative (p : Type -> Type -> Type) where
   biapplicativeMap : (x : p a b) -> (f : a -> c) -> (g : b -> d) ->
                      bimap f g x = (bipure f g) <<*>> x
   biapplicativeIdentity : (x : p a b) -> (bipure id id) <<*>> x = x
@@ -21,7 +21,7 @@ class (VerifiedBifunctor p, Biapplicative p) =>
                              (bipure (\f'  : a -> c => f'  x)
                                      (\f'' : b -> d => f'' y)) <<*>> f
 
-instance VerifieBiapplicative Pair where
+instance VerifiedBiapplicative Pair where
   biapplicativeMap         (a, b)  f  g         = Refl
   biapplicativeIdentity    (a, b)               = Refl
   biapplicativeComposition (a, b) (f, g) (h, i) = Refl
