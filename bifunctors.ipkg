@@ -7,4 +7,10 @@ modules = Data.Bifunctor,
           Data.Biapplicative,
           Data.Bimonad,
           Data.Bifoldable,
-          Data.Bitraversable
+          Data.Bitraversable,
+          Data.Bifunctor.Clown,
+          Data.Bifunctor.Flip,
+          Data.Bifunctor.Join,
+          Data.Bifunctor.Joker,
+          Data.Bifunctor.Wrapped,
+          Data.Verified.Bifunctor
