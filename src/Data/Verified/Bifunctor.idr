@@ -1,3 +1,5 @@
+module Data.Verified.Bifunctor
+
 import Data.Bifunctor
 
 ||| Verified Bifunctors

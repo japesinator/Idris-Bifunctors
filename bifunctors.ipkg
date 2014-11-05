@@ -13,4 +13,5 @@ modules = Data.Bifunctor,
           Data.Bifunctor.Join,
           Data.Bifunctor.Joker,
           Data.Bifunctor.Wrapped,
-          Data.Verified.Bifunctor
+          Data.Verified.Bifunctor,
+          Data.Verified.Biapplicative
