@@ -19,5 +19,5 @@ instance VerifiedBifunctor Either where
   bifunctorComposition (Right _) f g h i = Refl
 
 instance VerifiedBifunctor Pair where
-  bifunctorIdentity (a, b)            = Refl
+  bifunctorIdentity    (a, b)         = Refl
   bifunctorComposition (a, b) f g h i = Refl
