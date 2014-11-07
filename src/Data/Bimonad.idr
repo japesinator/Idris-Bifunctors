@@ -16,7 +16,7 @@ class (Biapplicative p, Biapplicative q) =>
 
   ||| Like the standard monadic bind operator
   (>>==) : (p a b, q a b) -> ((a -> p c d), (b -> q c d)) -> (p c d, q c d)
-  (pab, qab) >>== (p, q) = bijoin ((bimap p q, bimap p q) <<*>> (pab, qab))
+  (pab, qab) >>== (f, g) = bijoin ((bimap f g, bimap f g) <<*>> (pab, qab))
 
 ||| The equivalent of unit for standard monads
 biunit : Bimonad p q => a -> b -> (p a b, q a b)
