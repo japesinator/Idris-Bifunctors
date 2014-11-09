@@ -2,16 +2,17 @@ package bifunctors
 
 sourcedir = src
 
-modules = Data.Bifunctor,
-          Data.Bifunctor.Apply,
-          Data.Biapplicative,
-          Data.Bimonad,
-          Data.Bifoldable,
-          Data.Bitraversable,
-          Data.Bifunctor.Clown,
-          Data.Bifunctor.Flip,
-          Data.Bifunctor.Join,
-          Data.Bifunctor.Joker,
-          Data.Bifunctor.Wrapped,
-          Data.Verified.Bifunctor,
-          Data.Verified.Biapplicative
+modules = Data.Bifunctor
+        , Data.Bifunctor.Apply
+        , Data.Biapplicative
+        , Data.Bimonad
+        , Data.Bifoldable
+        , Data.Bitraversable
+        , Data.Bifunctor.Biff
+        , Data.Bifunctor.Clown
+        , Data.Bifunctor.Flip
+        , Data.Bifunctor.Join
+        , Data.Bifunctor.Joker
+        , Data.Bifunctor.Wrapped
+        , Data.Verified.Bifunctor
+        , Data.Verified.Biapplicative
