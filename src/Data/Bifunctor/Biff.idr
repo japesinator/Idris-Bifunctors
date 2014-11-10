@@ -1,7 +1,6 @@
 module Data.Bifunctor.Biff
 
 import Data.Bifunctor
-import Data.Bifunctor.Apply
 import Data.Biapplicative
 import Data.Bifoldable
 import Data.Bitraversable
