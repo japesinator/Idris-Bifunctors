@@ -23,11 +23,9 @@ instance (Foldable f, Bifoldable p) => Bifoldable (Tanned f p) where
   bifoldMap f g = (foldr ((<+>) . (bifoldMap f g)) neutral) . runTannen
 
 instance (Foldable f, Bifoldable p) => Foldable (Tanned f p a) where
-  foldr f z t = applyEndo ((((foldr ((<+>) . (bifoldMap (const        neutral)
-                                                        (Endo . f)))) neutral)
-                                              . runTannen)
-                                    t)
-                                    z
+  foldr f z t = applyEndo ((((foldr ((<+>) . (bifoldMap (const neutral)
+                                                        (Endo . f))))
+                                    neutral) . runTannen) t) z
 
 instance (Traversable f, Bitraversable p) => Bitraversable (Tanned f p) where
   bitraverse f g = map Tannen . traverse (bitraverse f g) . runTannen
