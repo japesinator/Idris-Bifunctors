@@ -17,7 +17,7 @@ class Bifunctor p => Biapplicative (p : Type -> Type -> Type) where
 
   ||| Given two biapplicatives, returns the second
   (*>>) : p a b -> p c d -> p c d
-  a *>> b = bimap (const id) (const id) <<$>>a <<*>> b
+  a *>> b = bimap (const id) (const id) <<$>> a <<*>> b
 
   ||| Given two biapplicatives, returns the first
   (<<*) : p a b -> p c d -> p a b
