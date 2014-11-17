@@ -130,6 +130,11 @@ biconcat : Bifoldable t => t (List a) (List a) -> List a
 biconcat = bifold
 
 ||| Reduces a structure to a list given methods to do so
+|||
+||| ````idris example
+||| biconcatMap (\x => [x]) (\x => [show x]) ("hello", 1) == ["hello", "1"]
+||| ````
+|||
 biconcatMap : Bifoldable t => (a -> (List c)) ->
                               (b -> (List c)) -> t a b -> List c
 biconcatMap = bifoldMap

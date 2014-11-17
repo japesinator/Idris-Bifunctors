@@ -63,10 +63,14 @@ test10 : biconcat ([1], [2]) =
          [1,2]
 test10 = Refl
 
-test11 : biany ((==) 42) ((==) "goodbye world") testPair0 =
-         True
+test11 : biconcatMap (\x => [show x]) (\x => [x]) testPair0 =
+         ["42", "hello world"]
 test11 = Refl
 
-test12 : biall ((==) 42) ((==) "goodbye world") testPair0 =
-         False
+test12 : biany ((==) 42) ((==) "goodbye world") testPair0 =
+         True
 test12 = Refl
+
+test13 : biall ((==) 42) ((==) "goodbye world") testPair0 =
+         False
+test13 = Refl
