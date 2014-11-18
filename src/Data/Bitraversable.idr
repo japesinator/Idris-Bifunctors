@@ -10,10 +10,20 @@ class (Bifunctor t, Bifoldable t) =>
       Bitraversable (t : Type -> Type -> Type) where
 
   ||| Evaluates functions on each element, building a new structure from results
+  |||
+  ||| ````idris example
+  ||| bitraverse (Just . id) (Just . show) ("hello", 1) == Just ("hello", "1")
+  ||| ````
+  |||
   bitraverse : Applicative f => (a -> f c) -> (b -> f d) -> t a b -> f (t c d)
   bitraverse f g = bisequence . bimap f g
 
   ||| Sequences all the actions, creating a new structure using the results
+  |||
+  ||| ````idris example
+  ||| bisequence ((Just "hello"), (Just "1")) == Just ("hello", "1")
+  ||| ````
+  |||
   bisequence : Applicative f => t (f a) (f b) -> f (t a b)
   bisequence = bitraverse id id
 
@@ -32,6 +42,12 @@ instance Applicative (StateL s) where
                         in (s'', f v'))
 
 ||| Traverses a structure leftwards with a state, creating a new structure
+|||
+||| ````idris example
+||| bimapAccumL (\x,y => (x, "goodbye"))
+|||             (\x,y => (x, 2)) True ("hello", 1) == (True, "goodbye", 2)
+||| ````
+|||
 bimapAccumL : Bitraversable t => (a -> b -> (a, c)) -> (a -> d -> (a, e)) ->
                                  a -> t b d -> (a, t c e)
 bimapAccumL f g s t = runStateL (bitraverse (SL . flip f) (SL . flip g) t) s
@@ -51,6 +67,12 @@ instance Applicative (StateR s) where
                         in (s'', f v))
 
 ||| Traverses a structure rightwards with a state, creating a new structure
+|||
+||| ````idris example
+||| bimapAccumR (\x,y => (x, "goodbye"))
+|||             (\x,y => (x, 2)) True ("hello", 1) == (True, "goodbye", 2)
+||| ````
+|||
 bimapAccumR : Bitraversable t => (a -> b -> (a, c)) -> (a -> d -> (a, e)) ->
                                  a -> t b d -> (a, t c e)
 bimapAccumR f g s t = runStateR (bitraverse (SR . flip f) (SR . flip g) t) s
