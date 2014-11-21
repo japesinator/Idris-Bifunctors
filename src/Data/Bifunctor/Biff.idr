@@ -5,6 +5,12 @@ import Data.Biapplicative
 import Data.Bifoldable
 import Data.Bitraversable
 
+||| Compose two functors on the inside of a bifunctor
+|||
+||| ````idris example
+||| Biff (Just 1, the (List String) ["hello"])
+||| ````
+|||
 record Biffed : (Type -> Type -> Type) -> (Type -> Type) -> (Type -> Type) ->
                 Type -> Type -> Type where
   Biff : (runBiff : p (f a) (g b)) -> Biffed p f g a b
