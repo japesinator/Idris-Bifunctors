@@ -5,6 +5,7 @@ import Data.Biapplicative
 import Data.Bifoldable
 import Data.Bitraversable
 
+||| Make a Functor over just the second argument of a Bifunctor
 record Joked : (Type -> Type) -> Type -> Type -> Type where
   Joker : (runJoker : p b) -> Joked p a b
 

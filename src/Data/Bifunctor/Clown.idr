@@ -5,6 +5,7 @@ import Data.Biapplicative
 import Data.Bifoldable
 import Data.Bitraversable
 
+||| Make a Functor over just the first argument of a Bifunctor
 record Clowned : (Type -> Type) -> Type -> Type -> Type where
   Clown : (runClown : p a) -> Clowned p a b
 
