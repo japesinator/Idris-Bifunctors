@@ -7,6 +7,12 @@ import Data.Bitraversable
 import Data.Verified.Bifunctor
 import Data.Verified.Biapplicative
 
+||| Reverse the arguments of a bifunctor
+|||
+||| ````idris example
+||| bimap (\x => x + 1) reverse (Flip ("hello", 1)) == Flip ("olleh", 2)
+||| ````
+|||
 record Flipped : (Type -> Type -> Type) -> Type -> Type -> Type where
   Flip : (runFlip : p a b) -> Flipped p b a
 
