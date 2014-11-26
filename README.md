@@ -21,6 +21,6 @@ Contains
 To Install
 ----------
 
-Run `idris --install quantities.ipkg` from inside this directory, and then if
+Run `idris --install bifunctors.ipkg` from inside this directory, and then if
 you want to use it with anything, invoke idris with `-p bifunctors` (i.e.
 `idris -p bifunctors hack_the_planet.idr`)
