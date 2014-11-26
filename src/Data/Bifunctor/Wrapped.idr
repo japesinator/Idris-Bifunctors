@@ -7,6 +7,12 @@ import Data.Bitraversable
 import Data.Verified.Bifunctor
 import Data.Verified.Biapplicative
 
+||| Wrap a Bifunctor
+|||
+||| ````idris example
+||| Wrap ("hello", 1)
+||| ````
+|||
 record Wrapped : (Type -> Type -> Type) -> Type -> Type -> Type where
   Wrap : (unwrap : p a b) -> Wrapped p a b
 
