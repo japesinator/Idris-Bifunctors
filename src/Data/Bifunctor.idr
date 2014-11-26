@@ -1,9 +1,9 @@
 module Data.Bifunctor
 
 ||| Bifunctors
-||| @p The action of the bifunctor on pairs of objects
+||| @p The action of the Bifunctor on pairs of objects
 class Bifunctor (p : Type -> Type -> Type) where
-  ||| The action of the bifunctor on pairs of morphisms
+  ||| The action of the Bifunctor on pairs of morphisms
   |||
   ||| ````idris example
   ||| bimap (\x => x + 1) reverse (1, "hello") == (2, "olleh")
@@ -12,7 +12,7 @@ class Bifunctor (p : Type -> Type -> Type) where
   bimap : (a -> b) -> (c -> d) -> p a c -> p b d
   bimap f g = first f . second g
 
-  ||| The action of the bifunctor on morphisms pertaining to the first object
+  ||| The action of the Bifunctor on morphisms pertaining to the first object
   |||
   ||| ````idris example
   ||| first (\x => x + 1) (1, "hello") == (2, "hello")
@@ -21,7 +21,7 @@ class Bifunctor (p : Type -> Type -> Type) where
   first : (a -> b) -> p a c -> p b c
   first f = bimap f id
 
-  ||| The action of the bifunctor on morphisms pertaining to the second object
+  ||| The action of the Bifunctor on morphisms pertaining to the second object
   |||
   ||| ````idris example
   ||| second reverse (1, "hello") == (1, "olleh")

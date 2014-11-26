@@ -3,6 +3,8 @@ module Data.Verified.Biapplicative
 import Data.Biapplicative
 import Data.Verified.Bifunctor
 
+||| Verified Biapplicatives
+||| A Biapplicative for which all the Applicative laws hold
 class (VerifiedBifunctor p, Biapplicative p) =>
       VerifiedBiapplicative (p : Type -> Type -> Type) where
   biapplicativeMap : (x : p a b) -> (f : a -> c) -> (g : b -> d) ->

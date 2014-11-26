@@ -5,7 +5,7 @@ import Data.Biapplicative
 import Data.Bifoldable
 import Data.Bitraversable
 
-||| Turns a bifunctor where both arguments are the same type to a functor
+||| Turns a Bifunctor where both arguments are the same type to a Functor
 |||
 ||| ````idris example
 ||| map reverse (Join ("hello, "goodbye")) == Join ("olleh", "eybdoog")

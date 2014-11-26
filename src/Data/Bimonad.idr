@@ -5,12 +5,12 @@ import Data.Biapplicative
 infixl 4 >>==
 
 ||| Bimonads
-||| @p the action of the first bifunctor component on pairs of objects
-||| @q the action of the second bifunctor component on pairs of objects
+||| @p the action of the first Bifunctor component on pairs of objects
+||| @q the action of the second Bifunctor component on pairs of objects
 class (Biapplicative p, Biapplicative q) =>
       Bimonad (p : Type -> Type -> Type) (q : Type -> Type -> Type) where
 
-  ||| The equivalent of join for standard monads
+  ||| The equivalent of `join` for standard Monads
   |||
   ||| ````idris example
   ||| bijoin (((1, "hello"      ), (2, "goodbye"      )),
@@ -31,7 +31,7 @@ class (Biapplicative p, Biapplicative q) =>
   (>>==) : (p a b, q a b) -> ((a -> p c d), (b -> q c d)) -> (p c d, q c d)
   (pab, qab) >>== (f, g) = bijoin ((bimap f g, bimap f g) <<*>> (pab, qab))
 
-||| The equivalent of unit for standard monads
+||| The equivalent of `unit` for standard Monads
 |||
 ||| ````idris example
 ||| biunit 1 "hello" == ((1, "hello"), (1, "hello"))

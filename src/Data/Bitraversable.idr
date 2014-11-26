@@ -5,7 +5,7 @@ import Data.Bifoldable
 import Control.Monad.Identity
 
 ||| Bitraversables
-||| @t A bifunctor and bifoldable object which can be traversed by monads
+||| @t A Bifunctor and Bifoldable object which can be traversed by monads
 class (Bifunctor t, Bifoldable t) =>
       Bitraversable (t : Type -> Type -> Type) where
 

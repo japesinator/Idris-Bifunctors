@@ -5,7 +5,7 @@ import Data.Biapplicative
 import Data.Bifoldable
 import Data.Bitraversable
 
-||| Compose a bifunctor inside a functor
+||| Compose a Bifunctor inside a Functor
 |||
 ||| ````idris example
 ||| Tannen (Just (1, "hello"))

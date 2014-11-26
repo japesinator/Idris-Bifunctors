@@ -6,10 +6,10 @@ import Data.Bifunctor.Apply
 infixl 4 <<*>>, <<*, *>>, <<**>>
 
 ||| Biapplicatives
-||| @p the action of the biapplicative on pairs of objects
+||| @p the action of the Biapplicative on pairs of objects
 class Bifunctor p => Biapplicative (p : Type -> Type -> Type) where
 
-  ||| Lifts two values into a biapplicative
+  ||| Lifts two values into a Biapplicative
   |||
   ||| ````idris example
   ||| bipure 1 "hello" = (1, "hello")
@@ -17,7 +17,7 @@ class Bifunctor p => Biapplicative (p : Type -> Type -> Type) where
   |||
   bipure : a -> b -> p a b
 
-  ||| Applies a biapplicative of functions to a second biapplicative
+  ||| Applies a Biapplicative of functions to a second Biapplicative
   |||
   ||| ````idris example
   ||| ( (\x => x + 1), reverse ) <<*>> (1, "hello") == (2, "olleh")
@@ -25,7 +25,7 @@ class Bifunctor p => Biapplicative (p : Type -> Type -> Type) where
   |||
   (<<*>>) : p (a -> b) (c -> d) -> p a c -> p b d
 
-  ||| Sequences two biapplicatives rightwards
+  ||| Sequences two Biapplicatives rightwards
   |||
   ||| ````idris example
   ||| (1, "hello") *>> (2, "goodbye") = (2, "goodbye")
@@ -34,7 +34,7 @@ class Bifunctor p => Biapplicative (p : Type -> Type -> Type) where
   (*>>) : p a b -> p c d -> p c d
   a *>> b = bimap (const id) (const id) <<$>> a <<*>> b
 
-  ||| Sequences two biapplicatives leftwards
+  ||| Sequences two Biapplicatives leftwards
   |||
   ||| ````idris example
   ||| (1, "hello") <<* (2, "goodbye") = (1, "hello")
@@ -43,7 +43,7 @@ class Bifunctor p => Biapplicative (p : Type -> Type -> Type) where
   (<<*) : p a b -> p c d -> p a b
   a <<* b = bimap const const <<$>> a <<*>> b
 
-||| Applies the second of two biapplicatives to the first
+||| Applies the second of two Biapplicatives to the first
 |||
 ||| ````idris example
 ||| (1, "hello") <<**>> ( (\x => x + 1), reverse ) == (2, "olleh")

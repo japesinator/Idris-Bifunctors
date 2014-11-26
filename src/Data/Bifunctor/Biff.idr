@@ -5,7 +5,7 @@ import Data.Biapplicative
 import Data.Bifoldable
 import Data.Bitraversable
 
-||| Compose two functors on the inside of a bifunctor
+||| Compose two Functors on the inside of a Bifunctor
 |||
 ||| ````idris example
 ||| Biff (Just 1, the (List String) ["hello"])

@@ -3,7 +3,7 @@ module Data.Verified.Bifunctor
 import Data.Bifunctor
 
 ||| Verified Bifunctors
-||| A bifunctor for which identity and composition laws are verified
+||| A Bifunctor for which identity and composition laws are verified
 class Bifunctor p => VerifiedBifunctor (p : Type -> Type -> Type) where
   bifunctorIdentity : {a : Type} -> {b : Type} -> (x : p a b) ->
                       bimap id id x = x

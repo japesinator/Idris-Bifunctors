@@ -2,7 +2,7 @@ module Data.Bifoldable
 
 import Data.Morphisms
 
--- Idris' standard library doesn't define dual monads, and those are really
+-- Idris' standard library doesn't define dual Monoids, and those are really
 --   handy for bifoldl, so they need to be rewritten
 --   {{{
 
@@ -21,7 +21,7 @@ instance Monoid s => Monoid (Dual s) where
 ||| @p a structure with two varieties of objects that can be folded across
 class Bifoldable (p : Type -> Type -> Type) where
 
-  ||| Combines the elements of a structure to a common monoid
+  ||| Combines the elements of a structure to a common Monoid
   |||
   ||| ````idris example
   ||| bifoldMap show id (1, "hello") == "1hello"
@@ -49,7 +49,7 @@ class Bifoldable (p : Type -> Type -> Type) where
   bifoldl f g z t = applyEndo (getDual (bifoldMap (toDual . Endo . flip f)
                                                   (toDual . Endo . flip g) t)) z
 
-||| Combine to elements of a structure using a monoid
+||| Combine to elements of a structure using a Monoid
 |||
 ||| ````idris example
 ||| bifold ("hello", "goodbye") == "hellogoodbye"
@@ -82,7 +82,7 @@ bifoldlM f g z0 xs = bifoldr f' g' return xs z0 where
   f' x k z = f z x >>= k
   g' x k z = g z x >>= k
 
-||| Traverses a structure with a functions ignoring the results
+||| Traverses a structure with a function, ignoring the results
 |||
 ||| ````idris example
 ||| bitraverse_ Just Just (1, "hello") = Just ()
@@ -92,7 +92,7 @@ bitraverse_ : (Bifoldable t, Applicative f) => (a -> f c) ->
                                                (b -> f d) -> t a b -> f ()
 bitraverse_ f g = bifoldr (($>) . f) (($>) . g) (pure ())
 
-||| Map a monad onto a structure, ignoring the results
+||| Map a Monad onto a structure, ignoring the results
 |||
 ||| ````idris example
 ||| bimapM_ Just Just (1, "hello") = Just ()
