@@ -5,6 +5,12 @@ import Data.Biapplicative
 import Data.Bifoldable
 import Data.Bitraversable
 
+||| Compose a bifunctor inside a functor
+|||
+||| ````idris example
+||| Tannen (Just (1, "hello"))
+||| ````
+|||
 record Tanned : (Type -> Type) -> (Type -> Type -> Type) ->
                 Type -> Type -> Type where
   Tannen : (runTannen : f (p a b)) -> Tanned f p a b
