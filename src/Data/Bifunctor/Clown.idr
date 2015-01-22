@@ -1,9 +1,11 @@
 module Data.Bifunctor.Clown
 
 import Data.Bifunctor
+import Data.Bifunctor.Apply
 import Data.Biapplicative
 import Data.Bifoldable
 import Data.Bitraversable
+import Data.Morphisms
 
 ||| Make a Functor over just the first argument of a Bifunctor
 record Clowned : (Type -> Type) -> Type -> Type -> Type where

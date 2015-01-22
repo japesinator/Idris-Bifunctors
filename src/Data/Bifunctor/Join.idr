@@ -1,9 +1,11 @@
 module Data.Bifunctor.Join
 
 import Data.Bifunctor
+import Data.Bifunctor.Apply
 import Data.Biapplicative
 import Data.Bifoldable
 import Data.Bitraversable
+import Data.Morphisms
 
 ||| Turns a Bifunctor where both arguments are the same type to a Functor
 |||

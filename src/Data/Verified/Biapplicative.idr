@@ -1,6 +1,7 @@
 module Data.Verified.Biapplicative
 
 import Data.Biapplicative
+import Data.Bifunctor
 import Data.Verified.Bifunctor
 
 ||| Verified Biapplicatives

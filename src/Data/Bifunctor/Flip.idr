@@ -1,55 +1,30 @@
 module Data.Bifunctor.Flip
 
 import Data.Bifunctor
+import Data.Bifunctor.Apply
 import Data.Biapplicative
 import Data.Bifoldable
 import Data.Bitraversable
-import Data.Verified.Bifunctor
-import Data.Verified.Biapplicative
+import Data.Morphisms
 
-||| Reverse the arguments of a Bifunctor
-|||
-||| ````idris example
-||| bimap (\x => x + 1) reverse (Flip ("hello", 1)) == Flip ("olleh", 2)
-||| ````
-|||
-record Flipped : (Type -> Type -> Type) -> Type -> Type -> Type where
-  Flip : (runFlip : p a b) -> Flipped p b a
+record Flip : (Type -> Type -> Type) -> Type -> Type -> Type where
+  toFlip : (runFlip : p a b) -> Flip p b a
 
-instance Bifunctor p => Bifunctor (Flipped p) where
-  bimap f g = Flip . bimap g f . runFlip
+instance Bifunctor p => Bifunctor (Flip p) where
+  bimap f g = toFlip . bimap g f . runFlip
 
-instance Bifunctor p => Functor (Flipped p a) where
-  map f = Flip . first f . runFlip
+instance Bifunctor p => Functor (Flip p a) where
+  map f = toFlip . first f . runFlip
 
-instance Biapply p => Biapply (Flipped p) where
-  (Flip fg) <<.>> (Flip xy) = Flip (fg <<.>> xy)
+instance Biapply p => Biapply (Flip p) where
+  (toFlip fg) <<.>> (toFlip xy) = toFlip (fg <<.>> xy)
 
-instance Biapplicative p => Biapplicative (Flipped p) where
-  bipure a b                = Flip $ bipure b a
-  (Flip fg) <<*>> (Flip xy) = Flip (fg <<*>> xy)
+instance Biapplicative p => Biapplicative (Flip p) where
+  bipure a b                    = toFlip $ bipure b a
+  (toFlip fg) <<*>> (toFlip xy) = toFlip (fg <<*>> xy)
 
-instance Bifoldable p => Bifoldable (Flipped p) where
+instance Bifoldable p => Bifoldable (Flip p) where
   bifoldMap f g = bifoldMap g f . runFlip
 
-instance Bifoldable p => Foldable (Flipped p a) where
-  foldr f z (Flip t) = applyEndo (bifoldMap (Endo . f) (const neutral) t) z
-
-instance Bitraversable p => Bitraversable (Flipped p) where
-  bitraverse f g = map Flip . bitraverse g f . runFlip
-
-instance Bitraversable p => Traversable (Flipped p a) where
-  traverse f = map Flip . bitraverse f pure . runFlip
-
-instance VerifiedBifunctor p => VerifiedBifunctor (Flipped p) where
-  bifunctorIdentity (Flip x) = rewrite bifunctorIdentity x in Refl
-  bifunctorComposition (Flip x) f g h i = rewrite bifunctorComposition x h i f g in Refl
-
-instance VerifiedBiapplicative p => VerifiedBiapplicative (Flipped p) where
-  biapplicativeMap (Flip x) f g = rewrite biapplicativeMap x g f in Refl
-  biapplicativeIdentity (Flip x) = rewrite biapplicativeIdentity x in Refl
-  biapplicativeComposition (Flip x) (Flip f) (Flip g) =
-    rewrite sym (biapplicativeComposition x f g) in Refl
-  biapplicativeHomomorphism x y f g = cong (biapplicativeHomomorphism y x g f)
-  biapplicativeInterchange a b (Flip f) =
-    rewrite biapplicativeInterchange b a f in Refl
+instance Bitraversable p => Bitraversable (Flip p) where
+  bitraverse f g = map toFlip . bitraverse g f . runFlip

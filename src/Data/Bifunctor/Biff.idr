@@ -1,9 +1,11 @@
 module Data.Bifunctor.Biff
 
 import Data.Bifunctor
+import Data.Bifunctor.Apply
 import Data.Biapplicative
 import Data.Bifoldable
 import Data.Bitraversable
+import Data.Morphisms
 
 ||| Compose two Functors on the inside of a Bifunctor
 |||
@@ -23,14 +25,13 @@ instance (Bifunctor p, Functor g) => Functor (Biffed p f g a) where
 
 instance (Biapplicative p, Applicative f, Applicative g) =>
          Biapplicative (Biffed p f g) where
-  bipure a b                = Biff (bipure (pure a) (pure b))
-  (Biff fg) <<*>> (Biff xy) = Biff (bimap (<$>) (<$>) fg <<*>> xy)
+  bipure a b                = Biff $ bipure (pure a) (pure b)
+  (Biff fg) <<*>> (Biff xy) = Biff $ bimap (<$>) (<$>) fg <<*>> xy
 
 instance (Bifoldable p, Foldable f, Foldable g) =>
          Bifoldable (Biffed p f g) where
   bifoldMap f g = bifoldMap (foldr ((<+>) . f) neutral)
                             (foldr ((<+>) . g) neutral) . runBiff
-
 
 instance (Bifoldable p, Foldable f, Foldable g) =>
          Foldable (Biffed p f g a) where

@@ -1,9 +1,11 @@
 module Data.Bifunctor.Wrapped
 
 import Data.Bifunctor
+import Data.Bifunctor.Apply
 import Data.Biapplicative
 import Data.Bifoldable
 import Data.Bitraversable
+import Data.Morphisms
 import Data.Verified.Bifunctor
 import Data.Verified.Biapplicative
 
