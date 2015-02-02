@@ -37,9 +37,9 @@ instance Functor (StateL s) where
 instance Applicative (StateL s) where
   pure x = SL (\s => (s, x))
   (SL kf) <$> (SL kv) = SL $ (\s =>
-                        let (s', f) = kf s
-                            (s'', v') = kv s'
-                        in (s'', f v'))
+                        let (s',  f)    = kf s
+                            (s'',   v') = kv s'
+                        in  (s'', f v'))
 
 ||| Traverses a structure leftwards with a state, creating a new structure
 |||
@@ -62,9 +62,9 @@ instance Functor (StateR s) where
 instance Applicative (StateR s) where
   pure x = SR (\s => (s, x))
   (SR kf) <$> (SR kv) = SR $ (\s =>
-                        let (s', v) = kv s
-                            (s'', f) = kf s'
-                        in (s'', f v))
+                        let (s',    v) = kv s
+                            (s'', f  ) = kf s'
+                        in  (s'', f v))
 
 ||| Traverses a structure rightwards with a state, creating a new structure
 |||
