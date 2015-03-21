@@ -25,7 +25,7 @@ instance (Bifunctor p, Functor f) => Functor (Tanned f p a) where
 
 instance (Biapplicative p, Applicative f) => Biapplicative (Tanned f p) where
   bipure a b = Tannen (pure (bipure a b))
-  (Tannen fg) <<*>> (Tannen xy) = Tannen ((map (<<*>>) fg) <$> xy)
+  (Tannen fg) <<*>> (Tannen xy) = Tannen ((map (<<*>>) fg) <*> xy)
 
 instance (Foldable f, Bifoldable p) => Bifoldable (Tanned f p) where
   bifoldMap f g = (foldr ((<+>) . (bifoldMap f g)) neutral) . runTannen

@@ -26,7 +26,7 @@ instance (Bifunctor p, Functor g) => Functor (Biffed p f g a) where
 instance (Biapplicative p, Applicative f, Applicative g) =>
          Biapplicative (Biffed p f g) where
   bipure a b                = Biff $ bipure (pure a) (pure b)
-  (Biff fg) <<*>> (Biff xy) = Biff $ bimap (<$>) (<$>) fg <<*>> xy
+  (Biff fg) <<*>> (Biff xy) = Biff $ bimap (<*>) (<*>) fg <<*>> xy
 
 instance (Bifoldable p, Foldable f, Foldable g) =>
          Bifoldable (Biffed p f g) where

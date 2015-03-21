@@ -47,12 +47,3 @@ instance VerifiedBifunctor p => VerifiedBifunctor (Wrapped p) where
   bifunctorIdentity (Wrap x) = rewrite bifunctorIdentity x in Refl
   bifunctorComposition (Wrap x) f g h i =
     rewrite bifunctorComposition x f g h i in Refl
-
-instance VerifiedBiapplicative p => VerifiedBiapplicative (Wrapped p) where
-  biapplicativeMap (Wrap x) f g = rewrite biapplicativeMap x f g in Refl
-  biapplicativeIdentity (Wrap x) = rewrite biapplicativeIdentity x in Refl
-  biapplicativeComposition (Wrap x) (Wrap f) (Wrap g) =
-    rewrite sym (biapplicativeComposition x f g) in Refl
-  biapplicativeHomomorphism x y f g = cong (biapplicativeHomomorphism x y f g)
-  biapplicativeInterchange a b (Wrap f) =
-    rewrite biapplicativeInterchange a b f in Refl

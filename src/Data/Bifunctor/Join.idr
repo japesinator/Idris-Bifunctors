@@ -21,7 +21,7 @@ instance Bifunctor p => Functor (Joined p) where
 
 instance Biapplicative p => Applicative (Joined p) where
   pure a                = Join (bipure a a)
-  (Join f) <$> (Join x) = Join (f <<*>> x)
+  (Join f) <*> (Join x) = Join (f <<*>> x)
 
 instance Bifoldable p => Foldable (Joined p) where
   foldr f z (Join t) = applyEndo (bifoldMap (Endo . f) (Endo . f) t) z
