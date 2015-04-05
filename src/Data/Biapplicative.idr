@@ -53,5 +53,5 @@ class Bifunctor p => Biapplicative (p : Type -> Type -> Type) where
 (<<**>>) = flip (<<*>>)
 
 instance Biapplicative Pair where
-  bipure a b = (a, b)
+  bipure a b          = (a, b)
   (f, g) <<*>> (a, b) = (f a, g b)

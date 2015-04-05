@@ -27,7 +27,7 @@ instance Functor (StateL s) where
 instance Applicative (StateL s) where
   pure x = SL (\s => (s, x))
   (SL kf) <*> (SL kv) = SL $ (\s =>
-                        let (s', f) = kf s
+                        let (s', f)   = kf s
                             (s'', v') = kv s'
                         in (s'', f v'))
 
@@ -59,5 +59,5 @@ instance Bitraversable Pair where
   bitraverse f g (a, b) = (map MkPair (f a)) <*> (g b)
 
 instance Bitraversable Either where
-  bitraverse f _ (Left a)  = map Left (f a)
-  bitraverse _ g (Right b) = map Right (g b)
+  bitraverse f _ (Left a)  = map Left  $ f a
+  bitraverse _ g (Right b) = map Right $ g b

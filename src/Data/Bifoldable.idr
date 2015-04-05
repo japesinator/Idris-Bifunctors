@@ -53,16 +53,16 @@ bifoldlM f g z0 xs = bifoldr f' g' return xs z0 where
 ||| Traverses a structure with a functions ignoring the results
 bitraverse_ : (Bifoldable t, Applicative f) => (a -> f c) ->
                                                (b -> f d) -> t a b -> f ()
-bitraverse_ f g = bifoldr ((*>) . f) ((*>) . g) (pure ())
+bitraverse_ f g = bifoldr ((*>) . f) ((*>) . g) $ pure ()
 
 ||| Map a monad onto a structure, ignoring the results
 bimapM_ : (Bifoldable t, Monad m) => (a -> m c) -> (b -> m d) -> t a b -> m ()
 bimapM_ f g = bifoldr ((\x, y => (x >>= (\_ => y))) . f)
-                      ((\x, y => (x >>= (\_ => y))) . g) (return ())
+                      ((\x, y => (x >>= (\_ => y))) . g) $ return ()
 
 ||| Sequences the actions in a structure, ignoring the results
 bisequence_ : (Bifoldable t, Applicative f) => t (f a) (f b) -> f ()
-bisequence_ = bifoldr (*>) (*>) (pure ())
+bisequence_ = bifoldr (*>) (*>) $ pure ()
 
 ||| Collects all the elements of a structure into a list
 biList : Bifoldable t => t a a -> List a

@@ -20,7 +20,7 @@ class (Biapplicative p, Biapplicative q) =>
   ||| ````
   |||
   bijoin : (p (p a b) (q a b), q (p a b) (q a b)) -> (p a b, q a b)
-  bijoin = flip (>>==) (id, id)
+  bijoin p = p >>== (id, id)
 
   ||| Like the standard monadic bind operator
   |||
@@ -30,7 +30,7 @@ class (Biapplicative p, Biapplicative q) =>
   ||| ````
   |||
   (>>==) : (p a b, q a b) -> ((a -> p c d), (b -> q c d)) -> (p c d, q c d)
-  (pab, qab) >>== (f, g) = bijoin ((bimap f g, bimap f g) <<*>> (pab, qab))
+  (pab, qab) >>== (f, g) = bijoin $ (bimap f g, bimap f g) <<*>> (pab, qab)
 
 ||| The equivalent of `unit` for standard Monads
 |||
