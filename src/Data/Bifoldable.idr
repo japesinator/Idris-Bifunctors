@@ -39,13 +39,15 @@ bifold : (Bifoldable t, Monoid m) => t m m -> m
 bifold = bifoldMap id id
 
 ||| Right associative monadic bifold
-bifoldrM : (Bifoldable t, Monad m) => (a -> c -> m c) -> (b -> c -> m c) -> c -> t a b -> m c
+bifoldrM : (Bifoldable t, Monad m) => (a -> c -> m c) -> (b -> c -> m c) -> c ->
+                                      t a b -> m c
 bifoldrM f g z0 xs = bifoldl f' g' return xs z0 where
   f' k x z = f x z >>= k
   g' k x z = g x z >>= k
 
 ||| Left associative monadic bifold
-bifoldlM : (Bifoldable t, Monad m) => (a -> b -> m a) -> (a -> c -> m a) -> a -> t b c -> m a
+bifoldlM : (Bifoldable t, Monad m) => (a -> b -> m a) -> (a -> c -> m a) -> a ->
+                                      t b c -> m a
 bifoldlM f g z0 xs = bifoldr f' g' return xs z0 where
   f' x k z = f z x >>= k
   g' x k z = g z x >>= k
