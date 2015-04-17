@@ -17,11 +17,11 @@ instance Bifunctor p => Functor (Flip p a) where
   map f = toFlip . first f . runFlip
 
 instance Biapply p => Biapply (Flip p) where
-  (toFlip fg) <<.>> (toFlip xy) = toFlip (fg <<.>> xy)
+  (toFlip fg) <<.>> (toFlip xy) = toFlip $ fg <<.>> xy
 
 instance Biapplicative p => Biapplicative (Flip p) where
   bipure a b                    = toFlip $ bipure b a
-  (toFlip fg) <<*>> (toFlip xy) = toFlip (fg <<*>> xy)
+  (toFlip fg) <<*>> (toFlip xy) = toFlip $ fg <<*>> xy
 
 instance Bifoldable p => Bifoldable (Flip p) where
   bifoldMap f g = bifoldMap g f . runFlip

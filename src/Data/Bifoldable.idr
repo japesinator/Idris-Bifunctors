@@ -31,8 +31,8 @@ class Bifoldable (p : Type -> Type -> Type) where
 
   ||| Combines the elements of a structure in a left-associative manner
   bifoldl : (c -> a -> c) -> (c -> b -> c) -> c -> p a b -> c
-  bifoldl f g z t = applyEndo (getDual (bifoldMap (toDual . Endo . flip f)
-                                                  (toDual . Endo . flip g) t)) z
+  bifoldl f g z t = applyEndo (getDual $ bifoldMap (toDual . Endo . flip f)
+                                                   (toDual . Endo . flip g) t) z
 
 ||| Combine to elements of a structure using a monoid
 bifold : (Bifoldable t, Monoid m) => t m m -> m

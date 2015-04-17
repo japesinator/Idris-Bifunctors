@@ -18,8 +18,8 @@ instance Functor (Clowned f a) where
   map _ = Clown . runClown
 
 instance Applicative f => Biapplicative (Clowned f) where
-  bipure a _                = Clown (pure a)
-  (Clown a) <<*>> (Clown b) = Clown (a <*> b)
+  bipure a _                = Clown $ pure a
+  (Clown a) <<*>> (Clown b) = Clown $ a <*> b
 
 instance Foldable t => Bifoldable (Clowned t) where
   bifoldMap f _ = concatMap f . runClown
