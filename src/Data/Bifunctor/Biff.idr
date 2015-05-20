@@ -13,9 +13,10 @@ import Data.Morphisms
 ||| Biff (Just 1, the (List String) ["hello"])
 ||| ````
 |||
-record Biffed : (Type -> Type -> Type) -> (Type -> Type) -> (Type -> Type) ->
-                Type -> Type -> Type where
-  Biff : (runBiff : p (f a) (g b)) -> Biffed p f g a b
+record Biffed (p : Type -> Type -> Type) (f : Type -> Type) (g : Type -> Type)
+              a b where
+  constructor Biff
+  runBiff : p (f a) (g b)
 
 instance (Bifunctor p, Functor f, Functor g) => Bifunctor (Biffed p f g) where
   bimap f g = Biff . bimap (map f) (map g) . runBiff

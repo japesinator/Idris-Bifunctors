@@ -13,8 +13,9 @@ import Data.Morphisms
 ||| map reverse (Join ("hello, "goodbye")) == Join ("olleh", "eybdoog")
 ||| ````
 |||
-record Joined : (Type -> Type -> Type) -> Type -> Type where
-  Join : (runJoined : p a a) -> Joined p a
+record Joined (p : Type -> Type -> Type) a where
+  constructor Join
+  runJoined : p a a
 
 instance Bifunctor p => Functor (Joined p) where
   map f (Join a) = Join (bimap f f a)

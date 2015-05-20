@@ -13,9 +13,9 @@ import Data.Morphisms
 ||| Tannen (Just (1, "hello"))
 ||| ````
 |||
-record Tanned : (Type -> Type) -> (Type -> Type -> Type) ->
-                Type -> Type -> Type where
-  Tannen : (runTannen : f (p a b)) -> Tanned f p a b
+record Tanned (f : Type -> Type) (p : Type -> Type -> Type) a b where
+  constructor Tannen
+  runTannen : f (p a b)
 
 instance (Bifunctor p, Functor f) => Bifunctor (Tanned f p) where
   bimap f g = Tannen . map (bimap f g) . runTannen

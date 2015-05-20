@@ -8,8 +8,9 @@ import Data.Bitraversable
 import Data.Morphisms
 
 ||| Make a Functor over just the first argument of a Bifunctor
-record Clowned : (Type -> Type) -> Type -> Type -> Type where
-  Clown : (runClown : p a) -> Clowned p a b
+record Clowned (p : Type -> Type) a b where
+  constructor Clown
+  runClown : p a
 
 instance Functor f => Bifunctor (Clowned f) where
   bimap f _ = Clown . map f . runClown

@@ -7,7 +7,6 @@ import Data.Bifoldable
 import Data.Bitraversable
 import Data.Morphisms
 import Data.Verified.Bifunctor
-import Data.Verified.Biapplicative
 
 ||| Wrap a Bifunctor
 |||
@@ -15,8 +14,9 @@ import Data.Verified.Biapplicative
 ||| Wrap ("hello", 1)
 ||| ````
 |||
-record Wrapped : (Type -> Type -> Type) -> Type -> Type -> Type where
-  Wrap : (unwrap : p a b) -> Wrapped p a b
+record Wrapped (p : Type -> Type -> Type) a b where
+  constructor Wrap
+  unwrap : p a b
 
 instance Bifunctor p => Bifunctor (Wrapped p) where
   bimap f g = Wrap . bimap f g . unwrap

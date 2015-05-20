@@ -18,8 +18,9 @@ class (Bifunctor t, Bifoldable t) =>
   bisequence = bitraverse id id
 
 ||| Leftwards state transformer
-record StateL : Type -> Type -> Type where
-  SL : (runStateL : s -> (s, a)) -> StateL s a
+record StateL s a where
+  constructor SL
+  runStateL : s -> (s, a)
 
 instance Functor (StateL s) where
   map f (SL k) = SL $ \s => let (s', v) = k s in (s', f v)
@@ -37,8 +38,9 @@ bimapAccumL : Bitraversable t => (a -> b -> (a, c)) -> (a -> d -> (a, e)) ->
 bimapAccumL f g s t = runStateL (bitraverse (SL . flip f) (SL . flip g) t) s
 
 ||| Rightwards state transformer
-record StateR : Type -> Type -> Type where
-  SR : (runStateR : s -> (s, a)) -> StateR s a
+record StateR s a where
+  constructor SR
+  runStateR : s -> (s, a)
 
 instance Functor (StateR s) where
   map f (SR k) = SR $ \s => let (s', v) = k s in (s', f v)

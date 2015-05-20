@@ -6,8 +6,9 @@ import Data.Morphisms
 --   handy for bifoldl, so they need to be rewritten
 --   {{{
 
-record Dual : Type -> Type where
-  toDual : (getDual : a) -> Dual a
+record Dual a where
+  constructor toDual
+  getDual : a
 
 instance Semigroup s => Semigroup (Dual s) where
   (toDual a) <+> (toDual b) = toDual (b <+> a)
@@ -82,8 +83,9 @@ biconcatMap = bifoldMap
 -- As in `Dual`, we need records not present in the standard library
 --   {{{
 
-record Any : Type where
-  toAny : (getAny : Bool) -> Any
+record Any where
+  constructor toAny
+  getAny : Bool
 
 instance Semigroup Any where
   (toAny a) <+> (toAny b) = toAny (a || b)
@@ -91,8 +93,9 @@ instance Semigroup Any where
 instance Monoid Any where
   neutral = toAny False
 
-record All : Type where
-  toAll : (getAll : Bool) -> All
+record All where
+  constructor toAll
+  getAll : Bool
 
 instance Semigroup All where
   (toAll a) <+> (toAll b) = toAll (a && b)

@@ -7,8 +7,9 @@ import Data.Bifoldable
 import Data.Bitraversable
 import Data.Morphisms
 
-record Flip : (Type -> Type -> Type) -> Type -> Type -> Type where
-  toFlip : (runFlip : p a b) -> Flip p b a
+record Flip (p : Type -> Type -> Type) b a where
+  constructor toFlip
+  runFlip : p a b
 
 instance Bifunctor p => Bifunctor (Flip p) where
   bimap f g = toFlip . bimap g f . runFlip

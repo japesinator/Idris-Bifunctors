@@ -8,8 +8,9 @@ import Data.Bitraversable
 import Data.Morphisms
 
 ||| Make a Functor over just the second argument of a Bifunctor
-record Joked : (Type -> Type) -> Type -> Type -> Type where
-  Joker : (runJoker : p b) -> Joked p a b
+record Joked (p : Type -> Type) a b where
+  constructor Joker
+  runJoker : p b
 
 instance Functor f => Bifunctor (Joked f) where
   bimap _ g = Joker . map g . runJoker
