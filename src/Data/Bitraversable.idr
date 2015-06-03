@@ -17,6 +17,10 @@ class (Bifunctor t, Bifoldable t) =>
   bisequence : Applicative f => t (f a) (f b) -> f (t a b)
   bisequence = bitraverse id id
 
+bimapM : (Monad m, Bitraversable t) => (a -> m c) ->
+                                       (b -> m d) -> t a b -> m (t c d)
+bimapM = bitraverse
+
 ||| Leftwards state transformer
 record StateL s a where
   constructor SL

@@ -22,6 +22,10 @@ instance Monoid s => Monoid (Dual s) where
 ||| @p a structure with two varieties of objects that can be folded across
 class Bifoldable (p : Type -> Type -> Type) where
 
+  ||| Combine the elements of a structure using a monoid
+  bifold : Monoid m => p m m -> m
+  bifold = bifoldMap id id
+
   ||| Combines the elements of a structure to a common monoid
   bifoldMap : Monoid m => (a -> m) -> (b -> m) -> (p a b) -> m
   bifoldMap f g = bifoldr ((<+>) . f) ((<+>) . g) neutral
@@ -34,10 +38,6 @@ class Bifoldable (p : Type -> Type -> Type) where
   bifoldl : (c -> a -> c) -> (c -> b -> c) -> c -> p a b -> c
   bifoldl f g z t = applyEndo (getDual $ bifoldMap (toDual . Endo . flip f)
                                                    (toDual . Endo . flip g) t) z
-
-||| Combine to elements of a structure using a monoid
-bifold : (Bifoldable t, Monoid m) => t m m -> m
-bifold = bifoldMap id id
 
 ||| Right associative monadic bifold
 bifoldrM : (Bifoldable t, Monad m) => (a -> c -> m c) -> (b -> c -> m c) -> c ->
