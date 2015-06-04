@@ -35,7 +35,7 @@ instance Bifoldable p => Bifoldable (Wrapped p) where
   bifoldMap f g = bifoldMap f g . unwrap
 
 instance Bifoldable p => Foldable (Wrapped p a) where
-  foldr f z (Wrap t) = applyEndo (bifoldMap (const neutral) (Endo . f) t) z
+  foldr f z = bifoldr (const $ const z) f z . unwrap
 
 instance Bitraversable p => Bitraversable (Wrapped p) where
   bitraverse f g = map Wrap . bitraverse f g . unwrap

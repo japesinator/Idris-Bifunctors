@@ -26,7 +26,7 @@ instance Foldable t => Bifoldable (Joked t) where
   bifoldMap _ g = concatMap g . runJoker
 
 instance Foldable t => Foldable (Joked t a) where
-  foldr f z (Joker t) = foldr f z t
+  foldr f z = foldr f z . runJoker
 
 instance Traversable t => Bitraversable (Joked t) where
   bitraverse _ g = map Joker . traverse g . runJoker

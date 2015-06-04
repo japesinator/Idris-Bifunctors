@@ -25,7 +25,7 @@ instance Biapplicative p => Applicative (Joined p) where
   (Join f) <*> (Join x) = Join (f <<*>> x)
 
 instance Bifoldable p => Foldable (Joined p) where
-  foldr f z (Join t) = applyEndo (bifoldMap (Endo . f) (Endo . f) t) z
+  foldr f z = bifoldr f f z . runJoined
 
 instance Bitraversable p => Traversable (Joined p) where
   traverse f (Join a) = map Join (bitraverse f f a)
