@@ -9,14 +9,24 @@ import Control.Monad.Identity
 class (Bifunctor t, Bifoldable t) =>
       Bitraversable (t : Type -> Type -> Type) where
 
-  ||| Evaluates functions on each element, building a new structure from results
   bitraverse : Applicative f => (a -> f c) -> (b -> f d) -> t a b -> f (t c d)
   bitraverse f g = bisequence . bimap f g
 
   ||| Sequences all the actions, creating a new structure using the results
+  |||
+  ||| ```idris example
+  ||| bisequence (Just "hello", Just 42) == Just ("hello", 42)
+  ||| ```
+  |||
   bisequence : Applicative f => t (f a) (f b) -> f (t a b)
   bisequence = bitraverse id id
 
+||| Evaluates functions on each element monadically, returning the results
+|||
+||| ```idris example
+||| bimapM Just (Just . (+) 2) ("hello", 42) == Just ("hello", 44)
+||| ```
+|||
 bimapM : (Monad m, Bitraversable t) => (a -> m c) ->
                                        (b -> m d) -> t a b -> m (t c d)
 bimapM = bitraverse
