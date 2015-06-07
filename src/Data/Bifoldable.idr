@@ -86,7 +86,7 @@ bifoldlM f g z0 xs = bifoldr f' g' return xs z0 where
   f' x k z = f z x >>= k
   g' x k z = g z x >>= k
 
-||| Traverses a structure with a functions ignoring the results
+||| Traverses a structure with a pair of functions ignoring the results
 |||
 ||| ```idris example
 ||| bitraverse_ Just Just ("hello", 42) == Just ()
@@ -96,7 +96,19 @@ bitraverse_ : (Bifoldable t, Applicative f) => (a -> f _) ->
                                                (b -> f _) -> t a b -> f ()
 bitraverse_ f g = bifoldr ((*>) . f) ((*>) . g) $ pure ()
 
-||| Map a monad onto a structure, ignoring the results
+||| Evaluate a pair of pair of functions for each element of a structure,
+||| ignoring the results.
+||| Like bitraverse_ but with the arguments flipped
+|||
+||| ```idris example
+||| bitraverse_ Just Just ("hello", 42) == Just ()
+||| ```
+|||
+bifor_ : (Bifoldable t, Applicative f) => (a -> f _) ->
+                                          (b -> f _) -> t a b -> f ()
+bifor_ f g = bifoldr ((*>) . f) ((*>) . g) $ pure ()
+
+||| Map a pair of monadic actions onto a structure, ignoring the results
 |||
 ||| ```idris example
 ||| bimapM_ Just Just ("hello", 42) == Just ()
@@ -105,6 +117,17 @@ bitraverse_ f g = bifoldr ((*>) . f) ((*>) . g) $ pure ()
 bimapM_ : (Bifoldable t, Monad m) => (a -> m _) -> (b -> m _) -> t a b -> m ()
 bimapM_ f g = bifoldr ((\x, y => (x >>= (\_ => y))) . f)
                       ((\x, y => (x >>= (\_ => y))) . g) $ return ()
+
+||| Evaluate a pair of monadic actions on each element in a structure, ignoring
+||| the results.
+||| Like bimapM_ but with the arguments flipped
+|||
+||| ```idris example
+||| bimapM_ ("hello", 42) Just Just == Just ()
+||| ```
+|||
+biforM_ : (Bifoldable t, Monad m) => t a b -> (a -> m _) -> (b -> m _) -> m ()
+biforM_ = flip bimapM_
 
 ||| Sequences the actions in a structure, ignoring the results
 |||
