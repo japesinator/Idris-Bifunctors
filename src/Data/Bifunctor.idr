@@ -19,7 +19,7 @@ class Bifunctor (p : Type -> Type -> Type) where
   ||| ````
   |||
   first : (a -> b) -> p a c -> p b c
-  first f = bimap f id
+  first = flip bimap id
 
   ||| The action of the Bifunctor on morphisms pertaining to the second object
   |||
