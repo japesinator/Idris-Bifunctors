@@ -115,8 +115,8 @@ bifor_ f g = bifoldr ((*>) . f) ((*>) . g) $ pure ()
 ||| ```
 |||
 bimapM_ : (Bifoldable t, Monad m) => (a -> m _) -> (b -> m _) -> t a b -> m ()
-bimapM_ f g = bifoldr ((\x, y => (x >>= (\_ => y))) . f)
-                      ((\x, y => (x >>= (\_ => y))) . g) $ return ()
+bimapM_ f g = bifoldr ((. const) . (>>=) . f)
+                      ((. const) . (>>=) . g) $ return ()
 
 ||| Evaluate a pair of monadic actions on each element in a structure, ignoring
 ||| the results.
@@ -127,7 +127,7 @@ bimapM_ f g = bifoldr ((\x, y => (x >>= (\_ => y))) . f)
 ||| ```
 |||
 biforM_ : (Bifoldable t, Monad m) => t a b -> (a -> m _) -> (b -> m _) -> m ()
-biforM_ = flip bimapM_
+biforM_ p f g = bimapM_ f g p
 
 ||| Sequences the actions in a structure, ignoring the results
 |||
