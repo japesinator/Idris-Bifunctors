@@ -4,16 +4,15 @@ module Data.Bifunctor.Apply
 
 import Data.Bifunctor
 
-infixl 4 <<$>>, <<.>>, <<., .>>, <<..>>
+infixl 4 <<$>>, <<&>>, <<.>>, <<., .>>, <<..>>
 
 ||| Primarily used to make the definitions of bilift2 and bilift3 pretty
-|||
-||| ````idris example
-||| (<<$>>) (+) 1 2 = 3
-||| ````
-|||
 (<<$>>) : (a -> b) -> a -> b
 (<<$>>) = id
+
+||| <<$>> with the arguments reversed
+(<<&>>) : a -> (a -> b) -> b
+(<<&>>) = flip id
 
 ||| Biapplys (not to be confused with Biapplicatives)
 ||| @p The action of the Biapply on pairs of objects
