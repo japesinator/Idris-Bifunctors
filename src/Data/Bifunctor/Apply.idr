@@ -7,10 +7,20 @@ import Data.Bifunctor
 infixl 4 <<$>>, <<&>>, <<.>>, <<., .>>, <<..>>
 
 ||| Primarily used to make the definitions of bilift2 and bilift3 pretty
+|||
+||| ```idris example
+||| bimap const const <<$>> (1, 2) <<.>> (3, 4) == (1, 2)
+||| ```
+|||
 (<<$>>) : (a -> b) -> a -> b
 (<<$>>) = id
 
 ||| <<$>> with the arguments reversed
+|||
+||| ```idris example
+||| (1, 2) <<&>> bimap const const <<.>> (3, 4) == (1, 2)
+||| ```
+|||
 (<<&>>) : a -> (a -> b) -> b
 (<<&>>) = flip id
 
