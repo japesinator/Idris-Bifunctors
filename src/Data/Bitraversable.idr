@@ -41,15 +41,13 @@ instance Functor (StateL s) where
 
 instance Applicative (StateL s) where
   pure x = SL (\s => (s, x))
-  (SL kf) <*> (SL kv) = SL $ \s =>
-                        let (s', f)   = kf s
-                            (s'', v') = kv s'
-                        in (s'', f v')
+  (SL kf) <*> (SL kv) = SL $ \s => let (s', f) = kf s; (s'', v') = kv s'
+                                   in (s'', f v')
 
 ||| Traverses a structure leftwards with a state, creating a new structure
 bimapAccumL : Bitraversable t => (a -> b -> (a, c)) -> (a -> d -> (a, e)) ->
                                  a -> t b d -> (a, t c e)
-bimapAccumL f g s t = runStateL (bitraverse (SL . flip f) (SL . flip g) t) s
+bimapAccumL f g = flip $ runStateL . bitraverse (SL . flip f) (SL . flip g)
 
 ||| Rightwards state transformer
 record StateR s a where
@@ -61,15 +59,13 @@ instance Functor (StateR s) where
 
 instance Applicative (StateR s) where
   pure x = SR (\s => (s, x))
-  (SR kf) <*> (SR kv) = SR $ \s =>
-                        let (s', v) = kv s
-                            (s'', f) = kf s'
-                        in (s'', f v)
+  (SR kf) <*> (SR kv) = SR $ \s => let (s', v) = kv s; (s'', f) = kf s'
+                                   in (s'', f v)
 
 ||| Traverses a structure rightwards with a state, creating a new structure
 bimapAccumR : Bitraversable t => (a -> b -> (a, c)) -> (a -> d -> (a, e)) ->
                                  a -> t b d -> (a, t c e)
-bimapAccumR f g s t = runStateR (bitraverse (SR . flip f) (SR . flip g) t) s
+bimapAccumR f g = flip $ runStateR . bitraverse (SR . flip f) (SR . flip g)
 
 instance Bitraversable Pair where
   bitraverse f g (a, b) = map MkPair (f a) <*> (g b)
