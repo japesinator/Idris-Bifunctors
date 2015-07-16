@@ -44,6 +44,7 @@ instance Applicative (StateL s) where
   (SL kf) <*> (SL kv) = SL $ \s => let (s', f) = kf s; (s'', v') = kv s'
                                    in (s'', f v')
 
+||| bimapAccumL with the order of arguments reversed
 biforAccumL : Bitraversable t => a -> t b d -> (a -> b -> (a, c)) ->
                                                (a -> d -> (a, e)) ->(a, t c e)
 biforAccumL s t f g = runStateL (bitraverse (SL . flip f) (SL . flip g) t) s
@@ -66,6 +67,7 @@ instance Applicative (StateR s) where
   (SR kf) <*> (SR kv) = SR $ \s => let (s', v) = kv s; (s'', f) = kf s'
                                    in (s'', f v)
 
+||| bimapAccuml with the order of arguments reversed
 biforAccumR : Bitraversable t => a -> t b d -> (a -> b -> (a, c)) ->
                                                (a -> d -> (a, e)) ->(a, t c e)
 biforAccumR s t f g = runStateR (bitraverse (SR . flip f) (SR . flip g) t) s
