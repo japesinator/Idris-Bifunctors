@@ -52,6 +52,14 @@ class Bifunctor p => Biapplicative (p : Type -> Type -> Type) where
 (<<**>>) : Biapplicative p => p a c -> p (a -> b) (c -> d) -> p b d
 (<<**>>) = flip (<<*>>)
 
+biliftA2 : Biapplicative p => (a -> b -> c) ->
+                              (d -> e -> f) -> p a d -> p b e -> p c f
+biliftA2 f g a b = bimap f g <<$>> a <<*>> b
+
+biliftA3 : Biapplicative p =>
+  (a -> b -> c -> d) -> (e -> f -> g -> h) -> p a e -> p b f -> p c g -> p d h
+biliftA3 f g a b c = bimap f g <<$>> a <<*>> b <<*>> c
+
 instance Biapplicative Pair where
   bipure a b          = (a, b)
   (f, g) <<*>> (a, b) = (f a, g b)
