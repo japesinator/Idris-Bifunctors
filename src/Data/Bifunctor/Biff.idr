@@ -31,12 +31,11 @@ instance (Biapplicative p, Applicative f, Applicative g) =>
 
 instance (Bifoldable p, Foldable f, Foldable g) =>
          Bifoldable (Biffed p f g) where
-  bifoldMap f g = bifoldMap (foldr ((<+>) . f) neutral)
-                            (foldr ((<+>) . g) neutral) . runBiff
+  bifoldMap f g = bifoldMap (concatMap f) (concatMap g) . runBiff
 
 instance (Bifoldable p, Foldable f, Foldable g) =>
          Foldable (Biffed p f g a) where
-  foldr f z t = bifoldr (flip const) f z t
+  foldr = bifoldr (flip const)
 
 instance (Bitraversable p, Traversable f, Traversable g) =>
          Bitraversable (Biffed p f g) where

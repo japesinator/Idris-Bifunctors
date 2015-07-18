@@ -29,7 +29,7 @@ instance Biapply p => Biapply (Wrapped p) where
 
 instance Biapplicative p => Biapplicative (Wrapped p) where
   bipure a b                = Wrap $ bipure a b
-  (Wrap fg) <<*>> (Wrap xy) = Wrap (fg <<*>> xy)
+  (Wrap fg) <<*>> (Wrap xy) = Wrap $ fg <<*>> xy
 
 instance Bifoldable p => Bifoldable (Wrapped p) where
   bifoldMap f g = bifoldMap f g . unwrap

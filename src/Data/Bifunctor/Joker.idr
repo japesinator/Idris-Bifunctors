@@ -20,8 +20,8 @@ instance Functor f => Functor (Joked f b) where
   map g = Joker . map g . runJoker
 
 instance Applicative f => Biapplicative (Joked f) where
-  bipure _ b                = Joker (pure b)
-  (Joker a) <<*>> (Joker b) = Joker (a <*> b)
+  bipure                    = const $ Joker . pure
+  (Joker a) <<*>> (Joker b) = Joker $ a <*> b
 
 instance Foldable t => Bifoldable (Joked t) where
   bifoldMap _ g = concatMap g . runJoker

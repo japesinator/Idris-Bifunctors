@@ -24,16 +24,15 @@ instance (Bifunctor p, Functor f) => Functor (Tanned f p a) where
   map f = Tannen . map (second f) . runTannen
 
 instance (Biapplicative p, Applicative f) => Biapplicative (Tanned f p) where
-  bipure a b = Tannen (pure (bipure a b))
-  (Tannen fg) <<*>> (Tannen xy) = Tannen ((map (<<*>>) fg) <*> xy)
+  bipure a b = Tannen . pure $ bipure a b
+  (Tannen fg) <<*>> (Tannen xy) = Tannen $ (map (<<*>>) fg) <*> xy
 
 instance (Foldable f, Bifoldable p) => Bifoldable (Tanned f p) where
   bifoldMap f g = (foldr ((<+>) . (bifoldMap f g)) neutral) . runTannen
 
 instance (Foldable f, Bifoldable p) => Foldable (Tanned f p a) where
-  foldr f z t = applyEndo ((((foldr ((<+>) . (bifoldMap (const neutral)
-                                                        (Endo . f))))
-                                    neutral) . runTannen) t) z
+  foldr f z t = applyEndo ((((concatMap . bifoldMap (const neutral)
+                                                  $ Endo . f)) . runTannen) t) z
 
 instance (Traversable f, Bitraversable p) => Bitraversable (Tanned f p) where
   bitraverse f g = map Tannen . traverse (bitraverse f g) . runTannen
