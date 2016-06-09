@@ -2,6 +2,8 @@ module Data.Bifoldable
 
 import Data.Morphisms
 
+%access public export
+
 -- Idris' standard library doesn't define dual monads, and those are really
 --   handy for bifoldl, so they need to be rewritten
 --   {{{

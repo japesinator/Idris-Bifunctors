@@ -7,6 +7,8 @@ import Data.Bifunctor.Apply
 import Data.Bitraversable
 import Data.Morphisms
 
+%access public export
+
 record Fix (p : Type -> Type -> Type) a where
   constructor In
   out : p (Fix p a) a

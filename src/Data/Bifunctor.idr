@@ -1,5 +1,7 @@
 module Data.Bifunctor
 
+%access public export
+
 ||| Bifunctors
 ||| @p The action of the Bifunctor on pairs of objects
 class Bifunctor (p : Type -> Type -> Type) where

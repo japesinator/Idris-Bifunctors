@@ -7,6 +7,8 @@ import Data.Bifoldable
 import Data.Bitraversable
 import Data.Morphisms
 
+%access public export
+
 ||| Turns a Bifunctor where both arguments are the same type to a Functor
 |||
 ||| ````idris example

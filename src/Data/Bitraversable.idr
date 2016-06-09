@@ -4,6 +4,8 @@ import Data.Bifunctor
 import Data.Bifoldable
 import Control.Monad.Identity
 
+%access public export
+
 ||| Bitraversables
 ||| @t A bifunctor and bifoldable object which can be traversed by monads
 class (Bifunctor t, Bifoldable t) =>

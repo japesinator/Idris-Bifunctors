@@ -4,6 +4,8 @@ import Data.Biapplicative
 import Data.Bifunctor
 import Data.Verified.Bifunctor
 
+%access public export
+
 ||| Verified Biapplicatives
 ||| A Biapplicative for which all the Applicative laws hold
 class (VerifiedBifunctor p, Biapplicative p) =>

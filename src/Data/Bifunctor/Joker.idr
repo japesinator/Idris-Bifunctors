@@ -7,6 +7,8 @@ import Data.Bifoldable
 import Data.Bitraversable
 import Data.Morphisms
 
+%access public export
+
 ||| Make a Functor over just the second argument of a Bifunctor
 ||| Intuitively, Joke_r_s to the right, C_l_owns to the left
 record Joked (p : Type -> Type) a b where

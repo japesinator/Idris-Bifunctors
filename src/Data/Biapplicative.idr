@@ -3,6 +3,8 @@ module Data.Biapplicative
 import Data.Bifunctor
 import Data.Bifunctor.Apply
 
+%access public export
+
 infixl 4 <<*>>, <<*, *>>, <<**>>
 
 ||| Biapplicatives

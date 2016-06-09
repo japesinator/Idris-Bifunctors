@@ -7,6 +7,8 @@ import Data.Bifoldable
 import Data.Bitraversable
 import Data.Morphisms
 
+%access public export
+
 ||| Compose two Functors on the inside of a Bifunctor
 |||
 ||| ````idris example

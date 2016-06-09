@@ -6,7 +6,8 @@ import Data.Biapplicative
 import Data.Bifoldable
 import Data.Bitraversable
 import Data.Morphisms
-import Data.Verified.Bifunctor
+
+%access public export
 
 ||| Wrap a Bifunctor
 |||
@@ -42,8 +43,3 @@ instance Bitraversable p => Bitraversable (Wrapped p) where
 
 instance Bitraversable p => Traversable (Wrapped p a) where
   traverse f = map Wrap . bitraverse pure f . unwrap
-
-instance VerifiedBifunctor p => VerifiedBifunctor (Wrapped p) where
-  bifunctorIdentity (Wrap x) = rewrite bifunctorIdentity x in Refl
-  bifunctorComposition (Wrap x) f g h i =
-    rewrite bifunctorComposition x f g h i in Refl

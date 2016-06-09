@@ -3,6 +3,8 @@ module Data.Bimonad
 import Data.Bifunctor
 import Data.Biapplicative
 
+%access public export
+
 infixl 4 >>==
 
 ||| Bimonads

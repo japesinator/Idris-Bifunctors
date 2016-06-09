@@ -4,6 +4,8 @@ module Data.Bifunctor.Apply
 
 import Data.Bifunctor
 
+%access public export
+
 infixl 4 <<$>>, <<&>>, <<.>>, <<., .>>, <<..>>
 
 ||| Primarily used to make the definitions of bilift2 and bilift3 pretty
