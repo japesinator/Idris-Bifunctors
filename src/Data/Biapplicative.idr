@@ -3,11 +3,13 @@ module Data.Biapplicative
 import Data.Bifunctor
 import Data.Bifunctor.Apply
 
+%access public export
+
 infixl 4 <<*>>, <<*, *>>, <<**>>
 
 ||| Biapplicatives
 ||| @p the action of the Biapplicative on pairs of objects
-class Bifunctor p => Biapplicative (p : Type -> Type -> Type) where
+interface Bifunctor p => Biapplicative (p : Type -> Type -> Type) where
 
   ||| Lifts two values into a Biapplicative
   |||
@@ -60,6 +62,6 @@ biliftA3 : Biapplicative p =>
   (a -> b -> c -> d) -> (e -> f -> g -> h) -> p a e -> p b f -> p c g -> p d h
 biliftA3 f g a b c = bimap f g <<$>> a <<*>> b <<*>> c
 
-instance Biapplicative Pair where
+implementation Biapplicative Pair where
   bipure a b          = (a, b)
   (f, g) <<*>> (a, b) = (f a, g b)
