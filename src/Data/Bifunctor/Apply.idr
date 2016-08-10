@@ -4,6 +4,8 @@ module Data.Bifunctor.Apply
 
 import Data.Bifunctor
 
+%access public export
+
 infixl 4 <<$>>, <<&>>, <<.>>, <<., .>>, <<..>>
 
 ||| Primarily used to make the definitions of bilift2 and bilift3 pretty
@@ -26,7 +28,7 @@ infixl 4 <<$>>, <<&>>, <<.>>, <<., .>>, <<..>>
 
 ||| Biapplys (not to be confused with Biapplicatives)
 ||| @p The action of the Biapply on pairs of objects
-class Bifunctor p => Biapply (p : Type -> Type -> Type) where
+interface Bifunctor p => Biapply (p : Type -> Type -> Type) where
 
   ||| Applys a Bifunctor of functions to another Bifunctor of the same type
   |||
@@ -84,5 +86,5 @@ bilift3 f g a b c = bimap f g <<$>> a <<.>> b <<.>> c
 (<<..>>): Biapply p => p a c -> p (a -> b) (c -> d) -> p b d
 (<<..>>) = flip (<<.>>)
 
-instance Biapply Pair where
+implementation Biapply Pair where
   (f, g) <<.>> (a, b) = (f a, g b)

@@ -2,24 +2,26 @@ module Data.Bifoldable
 
 import Data.Morphisms
 
+%access public export
+
 -- Idris' standard library doesn't define dual monads, and those are really
 --   handy for bifoldl, so they need to be rewritten
 --   {{{
 
 record Dual a where
-  constructor toDual
+  constructor ToDual
   getDual : a
 
-instance Semigroup s => Semigroup (Dual s) where
-  (toDual a) <+> (toDual b) = toDual (b <+> a)
+implementation Semigroup s => Semigroup (Dual s) where
+  (ToDual a) <+> (ToDual b) = ToDual (b <+> a)
 
-instance Monoid s => Monoid (Dual s) where
-  neutral = toDual neutral
+implementation Monoid s => Monoid (Dual s) where
+  neutral = ToDual neutral
 
 --   }}}
 
 ||| Bifoldables
-class Bifoldable (p : Type -> Type -> Type) where
+interface Bifoldable (p : Type -> Type -> Type) where
 
   ||| Combine the elements of a structure using a monoid
   |||
@@ -55,8 +57,8 @@ class Bifoldable (p : Type -> Type -> Type) where
   ||| ```
   |||
   bifoldl : (c -> a -> c) -> (c -> b -> c) -> c -> p a b -> c
-  bifoldl f g z t = applyEndo (getDual $ bifoldMap (toDual . Endo . flip f)
-                                                   (toDual . Endo . flip g) t) z
+  bifoldl f g z t = applyEndo (getDual $ bifoldMap (ToDual . Endo . flip f)
+                                                   (ToDual . Endo . flip g) t) z
 
 ||| Right associative monadic bifold
 |||
@@ -170,24 +172,24 @@ biconcatMap = bifoldMap
 --   {{{
 
 record Any where
-  constructor toAny
+  constructor ToAny
   getAny : Bool
 
-instance Semigroup Any where
-  (toAny a) <+> (toAny b) = toAny (a || b)
+implementation Semigroup Any where
+  (ToAny a) <+> (ToAny b) = ToAny (a || b)
 
-instance Monoid Any where
-  neutral = toAny False
+implementation Monoid Any where
+  neutral = ToAny False
 
 record All where
-  constructor toAll
+  constructor ToAll
   getAll : Bool
 
-instance Semigroup All where
-  (toAll a) <+> (toAll b) = toAll (a && b)
+implementation Semigroup All where
+  (ToAll a) <+> (ToAll b) = ToAll (a && b)
 
-instance Monoid All where
-  neutral = toAll True
+implementation Monoid All where
+  neutral = ToAll True
 
 --   }}}
 
@@ -198,7 +200,7 @@ instance Monoid All where
 ||| ```
 |||
 biany : Bifoldable t => (a -> Bool) -> (b -> Bool) -> t a b -> Bool
-biany p q = getAny . bifoldMap (toAny . p) (toAny . q)
+biany p q = getAny . bifoldMap (ToAny . p) (ToAny . q)
 
 ||| Checks if all elements in a structure satisfy a given condition
 |||
@@ -207,10 +209,10 @@ biany p q = getAny . bifoldMap (toAny . p) (toAny . q)
 ||| ```
 |||
 biall : Bifoldable t => (a -> Bool) -> (b -> Bool) -> t a b -> Bool
-biall p q = getAll . bifoldMap (toAll . p) (toAll . q)
+biall p q = getAll . bifoldMap (ToAll . p) (ToAll . q)
 
-instance Bifoldable Pair where
+implementation Bifoldable Pair where
   bifoldMap f g (a, b) = f a <+> g b
 
-instance Bifoldable Either where
+implementation Bifoldable Either where
   bifoldMap f g = either f g
