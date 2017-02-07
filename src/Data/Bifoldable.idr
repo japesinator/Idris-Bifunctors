@@ -70,7 +70,7 @@ interface Bifoldable (p : Type -> Type -> Type) where
 |||
 bifoldrM : (Bifoldable t, Monad m) => (a -> c -> m c) -> (b -> c -> m c) -> c ->
                                       t a b -> m c
-bifoldrM f g z0 xs = bifoldl f' g' return xs z0 where
+bifoldrM f g z0 xs = bifoldl f' g' pure xs z0 where
   f' k x z = f x z >>= k
   g' k x z = g x z >>= k
 
@@ -84,7 +84,7 @@ bifoldrM f g z0 xs = bifoldl f' g' return xs z0 where
 |||
 bifoldlM : (Bifoldable t, Monad m) => (a -> b -> m a) -> (a -> c -> m a) -> a ->
                                       t b c -> m a
-bifoldlM f g z0 xs = bifoldr f' g' return xs z0 where
+bifoldlM f g z0 xs = bifoldr f' g' pure xs z0 where
   f' x k z = f z x >>= k
   g' x k z = g z x >>= k
 
@@ -118,7 +118,7 @@ bifor_ f g = bifoldr ((*>) . f) ((*>) . g) $ pure ()
 |||
 bimapM_ : (Bifoldable t, Monad m) => (a -> m _) -> (b -> m _) -> t a b -> m ()
 bimapM_ f g = bifoldr ((. const) . (>>=) . f)
-                      ((. const) . (>>=) . g) $ return ()
+                      ((. const) . (>>=) . g) $ pure ()
 
 ||| Evaluate a pair of monadic actions on each element in a structure, ignoring
 ||| the results.
