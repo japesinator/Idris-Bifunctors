@@ -4,7 +4,7 @@ module Data.Bifunctor
 
 ||| Bifunctors
 ||| @p The action of the Bifunctor on pairs of objects
-class Bifunctor (p : Type -> Type -> Type) where
+interface Bifunctor (p : Type -> Type -> Type) where
   ||| The action of the Bifunctor on pairs of morphisms
   |||
   ||| ````idris example
@@ -32,9 +32,9 @@ class Bifunctor (p : Type -> Type -> Type) where
   second : (a -> b) -> p c a -> p c b
   second = bimap id
 
-instance Bifunctor Either where
+implementation Bifunctor Either where
   bimap f _ (Left  a) = Left  $ f a
   bimap _ g (Right b) = Right $ g b
 
-instance Bifunctor Pair where
+implementation Bifunctor Pair where
   bimap f g (a, b) = (f a, g b)

@@ -9,19 +9,19 @@ import Data.Morphisms
 --   {{{
 
 record Dual a where
-  constructor toDual
+  constructor ToDual
   getDual : a
 
-instance Semigroup s => Semigroup (Dual s) where
-  (toDual a) <+> (toDual b) = toDual (b <+> a)
+implementation Semigroup s => Semigroup (Dual s) where
+  (ToDual a) <+> (ToDual b) = ToDual (b <+> a)
 
-instance Monoid s => Monoid (Dual s) where
-  neutral = toDual neutral
+implementation Monoid s => Monoid (Dual s) where
+  neutral = ToDual neutral
 
 --   }}}
 
 ||| Bifoldables
-class Bifoldable (p : Type -> Type -> Type) where
+interface Bifoldable (p : Type -> Type -> Type) where
 
   ||| Combine the elements of a structure using a monoid
   |||
@@ -57,8 +57,8 @@ class Bifoldable (p : Type -> Type -> Type) where
   ||| ```
   |||
   bifoldl : (c -> a -> c) -> (c -> b -> c) -> c -> p a b -> c
-  bifoldl f g z t = applyEndo (getDual $ bifoldMap (toDual . Endo . flip f)
-                                                   (toDual . Endo . flip g) t) z
+  bifoldl f g z t = applyEndo (getDual $ bifoldMap (ToDual . Endo . flip f)
+                                                   (ToDual . Endo . flip g) t) z
 
 ||| Right associative monadic bifold
 |||
@@ -70,7 +70,7 @@ class Bifoldable (p : Type -> Type -> Type) where
 |||
 bifoldrM : (Bifoldable t, Monad m) => (a -> c -> m c) -> (b -> c -> m c) -> c ->
                                       t a b -> m c
-bifoldrM f g z0 xs = bifoldl f' g' return xs z0 where
+bifoldrM f g z0 xs = bifoldl f' g' pure xs z0 where
   f' k x z = f x z >>= k
   g' k x z = g x z >>= k
 
@@ -84,7 +84,7 @@ bifoldrM f g z0 xs = bifoldl f' g' return xs z0 where
 |||
 bifoldlM : (Bifoldable t, Monad m) => (a -> b -> m a) -> (a -> c -> m a) -> a ->
                                       t b c -> m a
-bifoldlM f g z0 xs = bifoldr f' g' return xs z0 where
+bifoldlM f g z0 xs = bifoldr f' g' pure xs z0 where
   f' x k z = f z x >>= k
   g' x k z = g z x >>= k
 
@@ -118,7 +118,7 @@ bifor_ f g = bifoldr ((*>) . f) ((*>) . g) $ pure ()
 |||
 bimapM_ : (Bifoldable t, Monad m) => (a -> m _) -> (b -> m _) -> t a b -> m ()
 bimapM_ f g = bifoldr ((. const) . (>>=) . f)
-                      ((. const) . (>>=) . g) $ return ()
+                      ((. const) . (>>=) . g) $ pure ()
 
 ||| Evaluate a pair of monadic actions on each element in a structure, ignoring
 ||| the results.
@@ -172,24 +172,24 @@ biconcatMap = bifoldMap
 --   {{{
 
 record Any where
-  constructor toAny
+  constructor ToAny
   getAny : Bool
 
-instance Semigroup Any where
-  (toAny a) <+> (toAny b) = toAny (a || b)
+implementation Semigroup Any where
+  (ToAny a) <+> (ToAny b) = ToAny (a || b)
 
-instance Monoid Any where
-  neutral = toAny False
+implementation Monoid Any where
+  neutral = ToAny False
 
 record All where
-  constructor toAll
+  constructor ToAll
   getAll : Bool
 
-instance Semigroup All where
-  (toAll a) <+> (toAll b) = toAll (a && b)
+implementation Semigroup All where
+  (ToAll a) <+> (ToAll b) = ToAll (a && b)
 
-instance Monoid All where
-  neutral = toAll True
+implementation Monoid All where
+  neutral = ToAll True
 
 --   }}}
 
@@ -200,7 +200,7 @@ instance Monoid All where
 ||| ```
 |||
 biany : Bifoldable t => (a -> Bool) -> (b -> Bool) -> t a b -> Bool
-biany p q = getAny . bifoldMap (toAny . p) (toAny . q)
+biany p q = getAny . bifoldMap (ToAny . p) (ToAny . q)
 
 ||| Checks if all elements in a structure satisfy a given condition
 |||
@@ -209,10 +209,10 @@ biany p q = getAny . bifoldMap (toAny . p) (toAny . q)
 ||| ```
 |||
 biall : Bifoldable t => (a -> Bool) -> (b -> Bool) -> t a b -> Bool
-biall p q = getAll . bifoldMap (toAll . p) (toAll . q)
+biall p q = getAll . bifoldMap (ToAll . p) (ToAll . q)
 
-instance Bifoldable Pair where
+implementation Bifoldable Pair where
   bifoldMap f g (a, b) = f a <+> g b
 
-instance Bifoldable Either where
+implementation Bifoldable Either where
   bifoldMap f g = either f g

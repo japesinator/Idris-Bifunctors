@@ -19,15 +19,15 @@ record Joined (p : Type -> Type -> Type) a where
   constructor Join
   runJoined : p a a
 
-instance Bifunctor p => Functor (Joined p) where
+implementation Bifunctor p => Functor (Joined p) where
   map f (Join a) = Join $ bimap f f a
 
-instance Biapplicative p => Applicative (Joined p) where
+implementation Biapplicative p => Applicative (Joined p) where
   pure a                = Join $ bipure a a
   (Join f) <*> (Join x) = Join $ f <<*>> x
 
-instance Bifoldable p => Foldable (Joined p) where
+implementation Bifoldable p => Foldable (Joined p) where
   foldr f z = bifoldr f f z . runJoined
 
-instance Bitraversable p => Traversable (Joined p) where
+implementation Bitraversable p => Traversable (Joined p) where
   traverse f (Join a) = map Join $ bitraverse f f a

@@ -10,7 +10,7 @@ infixl 4 >>==
 ||| Bimonads
 ||| @p the action of the first Bifunctor component on pairs of objects
 ||| @q the action of the second Bifunctor component on pairs of objects
-class (Biapplicative p, Biapplicative q) =>
+interface (Biapplicative p, Biapplicative q) =>
       Bimonad (p : Type -> Type -> Type) (q : Type -> Type -> Type) where
 
   ||| The equivalent of `join` for standard Monads
@@ -43,5 +43,5 @@ class (Biapplicative p, Biapplicative q) =>
 biunit : Bimonad p q => a -> b -> (p a b, q a b)
 biunit a b = (bipure a b, bipure a b)
 
-instance Bimonad Pair Pair where
+implementation Bimonad Pair Pair where
   bijoin = bimap fst snd

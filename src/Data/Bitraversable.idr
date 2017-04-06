@@ -8,7 +8,7 @@ import Control.Monad.Identity
 
 ||| Bitraversables
 ||| @t A bifunctor and bifoldable object which can be traversed by monads
-class (Bifunctor t, Bifoldable t) =>
+interface (Bifunctor t, Bifoldable t) =>
       Bitraversable (t : Type -> Type -> Type) where
 
   bitraverse : Applicative f => (a -> f c) -> (b -> f d) -> t a b -> f (t c d)
@@ -38,10 +38,10 @@ record StateL s a where
   constructor SL
   runStateL : s -> (s, a)
 
-instance Functor (StateL s) where
+implementation Functor (StateL s) where
   map f (SL k) = SL $ \s => let (s', v) = k s in (s', f v)
 
-instance Applicative (StateL s) where
+implementation Applicative (StateL s) where
   pure x = SL (\s => (s, x))
   (SL kf) <*> (SL kv) = SL $ \s => let (s', f) = kf s; (s'', v') = kv s'
                                    in (s'', f v')
@@ -61,10 +61,10 @@ record StateR s a where
   constructor SR
   runStateR : s -> (s, a)
 
-instance Functor (StateR s) where
+implementation Functor (StateR s) where
   map f (SR k) = SR $ \s => let (s', v) = k s in (s', f v)
 
-instance Applicative (StateR s) where
+implementation Applicative (StateR s) where
   pure x = SR $ \s => (s, x)
   (SR kf) <*> (SR kv) = SR $ \s => let (s', v) = kv s; (s'', f) = kf s'
                                    in (s'', f v)
@@ -79,9 +79,9 @@ bimapAccumR : Bitraversable t => (a -> b -> (a, c)) -> (a -> d -> (a, e)) ->
                                  a -> t b d -> (a, t c e)
 bimapAccumR f g s t = biforAccumR s t f g
 
-instance Bitraversable Pair where
+implementation Bitraversable Pair where
   bitraverse f g (a, b) = map MkPair (f a) <*> (g b)
 
-instance Bitraversable Either where
+implementation Bitraversable Either where
   bitraverse f _ (Left a)  = map Left  $ f a
   bitraverse _ g (Right b) = map Right $ g b

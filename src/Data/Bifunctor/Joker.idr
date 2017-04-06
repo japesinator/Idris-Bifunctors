@@ -15,24 +15,24 @@ record Joked (p : Type -> Type) a b where
   constructor Joker
   runJoker : p b
 
-instance Functor f => Bifunctor (Joked f) where
+implementation Functor f => Bifunctor (Joked f) where
   bimap _ g = Joker . map g . runJoker
 
-instance Functor f => Functor (Joked f b) where
+implementation Functor f => Functor (Joked f b) where
   map g = Joker . map g . runJoker
 
-instance Applicative f => Biapplicative (Joked f) where
+implementation Applicative f => Biapplicative (Joked f) where
   bipure                    = const $ Joker . pure
   (Joker a) <<*>> (Joker b) = Joker $ a <*> b
 
-instance Foldable t => Bifoldable (Joked t) where
+implementation Foldable t => Bifoldable (Joked t) where
   bifoldMap _ g = concatMap g . runJoker
 
-instance Foldable t => Foldable (Joked t a) where
+implementation Foldable t => Foldable (Joked t a) where
   foldr f z = foldr f z . runJoker
 
-instance Traversable t => Bitraversable (Joked t) where
+implementation Traversable t => Bitraversable (Joked t) where
   bitraverse _ g = map Joker . traverse g . runJoker
 
-instance Traversable t => Traversable (Joked t a) where
+implementation Traversable t => Traversable (Joked t a) where
   traverse g = map Joker . traverse g . runJoker
