@@ -9,6 +9,8 @@ import Data.Morphisms
 
 %access public export
 
+%access public export
+
 ||| Wrap a Bifunctor
 |||
 ||| ````idris example
@@ -43,3 +45,8 @@ implementation Bitraversable p => Bitraversable (Wrapped p) where
 
 implementation Bitraversable p => Traversable (Wrapped p a) where
   traverse f = map Wrap . bitraverse pure f . unwrap
+
+implementation VerifiedBifunctor p => VerifiedBifunctor (Wrapped p) where
+  bifunctorIdentity (Wrap x) = rewrite bifunctorIdentity x in Refl
+  bifunctorComposition (Wrap x) f g h i =
+    rewrite bifunctorComposition x f g h i in Refl

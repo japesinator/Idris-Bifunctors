@@ -8,11 +8,11 @@ import Data.Verified.Bifunctor
 
 ||| Verified Biapplicatives
 ||| A Biapplicative for which all the Applicative laws hold
-class (VerifiedBifunctor p, Biapplicative p) =>
+interface (VerifiedBifunctor p, Biapplicative p) =>
       VerifiedBiapplicative (p : Type -> Type -> Type) where
   biapplicativeMap           : (x : p a b) -> (f : a -> c) -> (g : b -> d) ->
                                bimap f g x = (bipure f g) <<*>> x
-  biapplicativeIdentity      : (x : p a b) -> (bipure id id) <<*>> x = x
+  biapplicativeIdentity      : (x : p a b) -> (bipure Basics.id Basics.id) <<*>> x = x
   biapplicativeComposition   : (x : p a b) -> (f : p (a -> c) (b -> d)) ->
                                (g : p (c -> e) (d -> a')) ->
                                (((bipure (.) (.)) <<*>> g) <<*>> f) <<*>> x =
@@ -27,7 +27,7 @@ class (VerifiedBifunctor p, Biapplicative p) =>
                                (bipure (\f'  : a -> c => f'  x)
                                        (\f'' : b -> d => f'' y)) <<*>> f
 
-instance VerifiedBiapplicative Pair where
+implementation VerifiedBiapplicative Pair where
   biapplicativeMap         (_, _)  _  _         = Refl
   biapplicativeIdentity    (_, _)               = Refl
   biapplicativeComposition (_, _) (_, _) (_, _) = Refl
