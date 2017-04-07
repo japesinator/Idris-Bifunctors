@@ -15,5 +15,3 @@ modules = Data.Bifunctor
         , Data.Bifunctor.Joker
         , Data.Bifunctor.Tannen
         , Data.Bifunctor.Wrapped
-        , Data.Verified.Bifunctor
-        , Data.Verified.Biapplicative

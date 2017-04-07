@@ -6,7 +6,8 @@ import Data.Biapplicative
 import Data.Bifoldable
 import Data.Bitraversable
 import Data.Morphisms
-import Data.Verified.Bifunctor
+
+%access public export
 
 %access public export
 

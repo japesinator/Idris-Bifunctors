@@ -7,7 +7,7 @@ import Data.Bifunctor
 ||| Verified Bifunctors
 ||| A Bifunctor for which identity and composition laws are verified
 interface Bifunctor p => VerifiedBifunctor (p : Type -> Type -> Type) where
-  bifunctorIdentity : (x : p a b) -> bimap Basics.id Basics.id x = x
+  bifunctorIdentity : (x : p a b) -> bimap id id x = x
   bifunctorComposition : (x : p a d) -> (f : a -> b) -> (g : b -> c) ->
                          (h : d -> e) -> (i : e -> a') ->
                          (bimap (g . f) (i . h) x) =
