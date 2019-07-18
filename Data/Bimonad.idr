@@ -3,14 +3,13 @@ module Data.Bimonad
 import Data.Bifunctor
 import Data.Biapplicative
 
-%access public export
-
 infixl 4 >>==
 
 ||| Bimonads
 ||| @p the action of the first Bifunctor component on pairs of objects
 ||| @q the action of the second Bifunctor component on pairs of objects
-interface (Biapplicative p, Biapplicative q) =>
+public export
+interface Bifunctor p => Bifunctor q => Biapplicative p => Biapplicative q =>
       Bimonad (p : Type -> Type -> Type) (q : Type -> Type -> Type) where
 
   ||| The equivalent of `join` for standard Monads
@@ -40,8 +39,10 @@ interface (Biapplicative p, Biapplicative q) =>
 ||| biunit 1 "hello" == ((1, "hello"), (1, "hello"))
 ||| ````
 |||
-biunit : Bimonad p q => a -> b -> (p a b, q a b)
+public export
+biunit : (Biapplicative p, Bimonad p q) => a -> b -> (p a b, q a b)
 biunit a b = (bipure a b, bipure a b)
 
+public export
 implementation Bimonad Pair Pair where
   bijoin = bimap fst snd

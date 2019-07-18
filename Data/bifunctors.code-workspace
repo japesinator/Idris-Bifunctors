@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "/Users/davidsmith/personal/idris/Idris-Bifunctors"
+		}
+	],
+	"settings": {
+		"idris.executablePath": "/Users/davidsmith/.idris2/bin/idris2",
+		"idris.showOutputWhenTypechecking": true
+	}
+}

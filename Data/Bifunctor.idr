@@ -1,9 +1,8 @@
 module Data.Bifunctor
 
-%access public export
-
 ||| Bifunctors
 ||| @p The action of the Bifunctor on pairs of objects
+public export
 interface Bifunctor (p : Type -> Type -> Type) where
   ||| The action of the Bifunctor on pairs of morphisms
   |||
@@ -32,9 +31,11 @@ interface Bifunctor (p : Type -> Type -> Type) where
   second : (a -> b) -> p c a -> p c b
   second = bimap id
 
+public export
 implementation Bifunctor Either where
   bimap f _ (Left  a) = Left  $ f a
   bimap _ g (Right b) = Right $ g b
 
+public export
 implementation Bifunctor Pair where
   bimap f g (a, b) = (f a, g b)
