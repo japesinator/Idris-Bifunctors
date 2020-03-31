@@ -1,0 +1,26 @@
+[package]
+name = "japesinator/Idris-Bifunctors"
+version = "0.1.0"
+authors = []
+
+[dependencies]
+
+[targets.lib]
+path = "src"
+mods = [ "Data.Bifunctor"
+       , "Data.Bifunctor.Apply"
+       , "Data.Biapplicative"
+       , "Data.Bimonad"
+       , "Data.Bifoldable"
+       , "Data.Bitraversable"
+       , "Data.Bifunctor.Biff"
+       , "Data.Bifunctor.Clown"
+       , "Data.Bifunctor.Flip"
+       , "Data.Bifunctor.Join"
+       , "Data.Bifunctor.Joker"
+       , "Data.Bifunctor.Tannen"
+       , "Data.Bifunctor.Wrapped"
+       , "Data.Verified.Bifunctor"
+       , "Data.Verified.Biapplicative"
+       ]
+
