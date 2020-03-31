@@ -7,7 +7,6 @@ authors = []
 
 [targets.lib]
 path = "src"
-name = "bifunctors"
 mods = [ "Data.Bifunctor"
        , "Data.Bifunctor.Apply"
        , "Data.Biapplicative"
