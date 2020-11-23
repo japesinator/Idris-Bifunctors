@@ -25,7 +25,7 @@ implementation Bifunctor p => Bifunctor (Wrapped p) where
 
 public export
 implementation Bifunctor p => Functor (Wrapped p a) where
-  map f = Wrap . second f . unwrap
+  map f = Wrap . mapSnd f . unwrap
 
 public export
 implementation Biapply p => Biapply (Wrapped p) where

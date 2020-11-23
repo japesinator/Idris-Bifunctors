@@ -24,7 +24,7 @@ implementation (Bifunctor p, Functor f) => Bifunctor (Tanned f p) where
 
 public export
 implementation (Bifunctor p, Functor f) => Functor (Tanned f p a) where
-  map f = Tannen . map (second f) . runTannen
+  map f = Tannen . map (mapSnd f) . runTannen
 
 public export
 implementation (Biapplicative p, Applicative f) => Biapplicative (Tanned f p) where

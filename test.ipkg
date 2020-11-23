@@ -1,11 +1,11 @@
-package bifunctors.test
+package bifunctorstest
 
 -- Don't install this except as part of an automated test
 
-sourcedir = test
+sourcedir = "test"
 
 modules = Data.Bifunctor.Test
-        , Data.Biapply.Test
+        , Data.Bifunctor.Apply.Test
         , Data.Biapplicative.Test
         , Data.Bimonad.Test
         , Data.Bifoldable.Test

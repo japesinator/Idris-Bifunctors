@@ -18,7 +18,7 @@ implementation Bifunctor p => Bifunctor (Flip p) where
 
 public export
 implementation Bifunctor p => Functor (Flip p a) where
-  map f = ToFlip . first f . runFlip
+  map f = ToFlip . mapFst f . runFlip
 
 public export
 implementation Biapply p => Biapply (Flip p) where

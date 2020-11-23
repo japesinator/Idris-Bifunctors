@@ -25,7 +25,7 @@ implementation (Bifunctor p, Functor f, Functor g) => Bifunctor (Biffed p f g) w
 
 public export
 implementation (Bifunctor p, Functor g) => Functor (Biffed p f g a) where
-  map f = Biff . second (map f) . runBiff
+  map f = Biff . mapSnd (map f) . runBiff
 
 public export
 implementation (Biapplicative p, Applicative f, Applicative g) =>
