@@ -8,7 +8,7 @@ infixl 4 <<*>>, <<*, *>>, <<**>>
 ||| Biapplicatives
 ||| @p the action of the Biapplicative on pairs of objects
 public export
-interface Bifunctor p => Biapplicative (p : Type -> Type -> Type) where
+interface Bifunctor p => Biapplicative (0 p : Type -> Type -> Type) where
 
   ||| Lifts two values into a Biapplicative
   |||

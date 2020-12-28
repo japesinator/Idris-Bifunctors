@@ -23,7 +23,7 @@ implementation Monoid s => Monoid (Dual s) where
 
 ||| Bifoldables
 public export
-interface Bifoldable (p : Type -> Type -> Type) where
+interface Bifoldable (0 p : Type -> Type -> Type) where
 
   ||| Combine the elements of a structure using a monoid
   |||

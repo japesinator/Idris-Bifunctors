@@ -8,7 +8,7 @@ import Control.Monad.Identity
 ||| @t A bifunctor and bifoldable object which can be traversed by monads
 public export
 interface (Bifunctor t, Bifoldable t) =>
-      Bitraversable (t : Type -> Type -> Type) where
+      Bitraversable (0 t : Type -> Type -> Type) where
 
   bitraverse : Applicative f => (a -> f c) -> (b -> f d) -> t a b -> f (t c d)
   bitraverse f g = bisequence . bimap f g
