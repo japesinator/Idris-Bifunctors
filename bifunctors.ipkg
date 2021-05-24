@@ -1,6 +1,5 @@
 package bifunctors
 
-sourcedir = src
 
 modules = Data.Bifunctor
         , Data.Bifunctor.Apply

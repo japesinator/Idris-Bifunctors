@@ -4,10 +4,9 @@ import Data.Biapplicative
 import Data.Bifunctor
 import Data.Verified.Bifunctor
 
-%access public export
-
 ||| Verified Biapplicatives
 ||| A Biapplicative for which all the Applicative laws hold
+public export
 interface (VerifiedBifunctor p, Biapplicative p) =>
       VerifiedBiapplicative (p : Type -> Type -> Type) where
   biapplicativeMap           : (x : p a b) -> (f : a -> c) -> (g : b -> d) ->
@@ -24,9 +23,10 @@ interface (VerifiedBifunctor p, Biapplicative p) =>
   biapplicativeInterchange   : (x : a) -> (y : b) ->
                                (f : p (a -> c) (b -> d)) ->
                                f <<*>> (bipure x y) =
-                               (bipure (\f'  : a -> c => f'  x)
-                                       (\f'' : b -> d => f'' y)) <<*>> f
+                               (bipure (\f' : (a -> c) => f'  x)
+                                       (\f'' : (b -> d) => f'' y)) <<*>> f
 
+public export
 implementation VerifiedBiapplicative Pair where
   biapplicativeMap         (_, _)  _  _         = Refl
   biapplicativeIdentity    (_, _)               = Refl

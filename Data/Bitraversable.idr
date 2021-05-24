@@ -4,12 +4,11 @@ import Data.Bifunctor
 import Data.Bifoldable
 import Control.Monad.Identity
 
-%access public export
-
 ||| Bitraversables
 ||| @t A bifunctor and bifoldable object which can be traversed by monads
+public export
 interface (Bifunctor t, Bifoldable t) =>
-      Bitraversable (t : Type -> Type -> Type) where
+      Bitraversable (0 t : Type -> Type -> Type) where
 
   bitraverse : Applicative f => (a -> f c) -> (b -> f d) -> t a b -> f (t c d)
   bitraverse f g = bisequence . bimap f g
@@ -34,54 +33,66 @@ bimapM : (Monad m, Bitraversable t) => (a -> m c) ->
 bimapM = bitraverse
 
 ||| Leftwards state transformer
+public export
 record StateL s a where
   constructor SL
   runStateL : s -> (s, a)
 
+export
 implementation Functor (StateL s) where
   map f (SL k) = SL $ \s => let (s', v) = k s in (s', f v)
 
+export
 implementation Applicative (StateL s) where
   pure x = SL (\s => (s, x))
   (SL kf) <*> (SL kv) = SL $ \s => let (s', f) = kf s; (s'', v') = kv s'
                                    in (s'', f v')
 
 ||| bimapAccumL with the order of arguments reversed
+public export
 biforAccumL : Bitraversable t => a -> t b d -> (a -> b -> (a, c)) ->
                                                (a -> d -> (a, e)) ->(a, t c e)
 biforAccumL s t f g = runStateL (bitraverse (SL . flip f) (SL . flip g) t) s
 
 ||| Traverses a structure leftwards with a state, creating a new structure
+public export
 bimapAccumL : Bitraversable t => (a -> b -> (a, c)) -> (a -> d -> (a, e)) ->
                                  a -> t b d -> (a, t c e)
 bimapAccumL f g s t = biforAccumL s t f g
 
 ||| Rightwards state transformer
+public export
 record StateR s a where
   constructor SR
   runStateR : s -> (s, a)
 
+export
 implementation Functor (StateR s) where
   map f (SR k) = SR $ \s => let (s', v) = k s in (s', f v)
 
+export
 implementation Applicative (StateR s) where
   pure x = SR $ \s => (s, x)
   (SR kf) <*> (SR kv) = SR $ \s => let (s', v) = kv s; (s'', f) = kf s'
                                    in (s'', f v)
 
 ||| bimapAccuml with the order of arguments reversed
+public export
 biforAccumR : Bitraversable t => a -> t b d -> (a -> b -> (a, c)) ->
                                                (a -> d -> (a, e)) ->(a, t c e)
 biforAccumR s t f g = runStateR (bitraverse (SR . flip f) (SR . flip g) t) s
 
 ||| Traverses a structure rightwards with a state, creating a new structure
+public export
 bimapAccumR : Bitraversable t => (a -> b -> (a, c)) -> (a -> d -> (a, e)) ->
                                  a -> t b d -> (a, t c e)
 bimapAccumR f g s t = biforAccumR s t f g
 
+export
 implementation Bitraversable Pair where
   bitraverse f g (a, b) = map MkPair (f a) <*> (g b)
 
+export
 implementation Bitraversable Either where
   bitraverse f _ (Left a)  = map Left  $ f a
   bitraverse _ g (Right b) = map Right $ g b

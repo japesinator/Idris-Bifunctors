@@ -17,6 +17,7 @@ intFunct = Just . show
 stringFunct : String -> Maybe String
 stringFunct = Just . id
 
+-- (Int -> Maybe String) -> (String -> Maybe String) -> Either Int String -> Maybe (Either String String)
 test0 : bitraverse intFunct stringFunct testEither0 =
         Just (Left "43")
 test0 = Refl
